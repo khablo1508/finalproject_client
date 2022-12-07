@@ -1,5 +1,6 @@
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+
 import logo from '../assets/logo-doctor-dasha.png';
 
 function Navbar() {
@@ -70,6 +71,7 @@ const Wrapper = styled.nav`
     background: #f6f0e7;
     color: #734938;
     border-radius: 10px;
+    font-size: 20px;
   }
 `;
 

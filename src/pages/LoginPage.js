@@ -1,10 +1,11 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const API_URL = 'http://localhost:5005';
 
-function LoginPage(props) {
+function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -15,7 +16,22 @@ function LoginPage(props) {
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
 
-  const handleLoginSubmit = (e) => {};
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+
+    const requestBody = { email, password };
+
+    axios
+      .post(`${API_URL}/auth/login`, requestBody)
+      .then((response) => {
+        console.log('successfully logged in', response.data.authToken);
+        navigate('/');
+      })
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        setErrorMessage(errorDescription);
+      });
+  };
 
   return (
     <Wrapper>

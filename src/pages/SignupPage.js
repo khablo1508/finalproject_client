@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:5005';
 
-function SignupPage(props) {
+function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -17,7 +17,21 @@ function SignupPage(props) {
   const handlePassword = (e) => setPassword(e.target.value);
   const handleUsername = (e) => setUsername(e.target.value);
 
-  const handleSignupSubmit = (e) => {};
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
+    const requestBody = { username, email, password };
+
+    axios
+      .post(`${API_URL}/auth/signup`, requestBody)
+      .then((response) => {
+        console.log('user created!');
+        navigate('/');
+      })
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        setErrorMessage(errorDescription);
+      });
+  };
 
   return (
     <Wrapper>

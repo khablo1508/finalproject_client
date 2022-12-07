@@ -69,6 +69,7 @@ const Wrapper = styled.main`
     color: #821d30;
   }
   .home-text-container p {
+    text-align: center;
     width: 50%;
     max-width: 700px;
     height: 40%;

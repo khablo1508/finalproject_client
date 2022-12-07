@@ -1,13 +1,39 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Parisienne&display=swap');
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --clr-bourdeaux: #821d30;
+  --clr-dark: #a27565;
+  --clr-light: #dcd4c0;
+  --clr-ivory: #f6f0e7;
+  --clr-pink: #fbebe7;
+}
+
+body {
+  background: var(--clr-ivory);
+  font-family: 'Parisienne', cursive;
+}
+
+.btn {
+  width: 180px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border: none;
+}
+.sign-btn {
+  background-color: var(--clr-dark);
+  color: #f6f0e7;
+}
+input {
+  border: none;
+  border-radius: 10px;
 }

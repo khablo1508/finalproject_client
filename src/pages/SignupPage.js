@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth.context';
 
 const API_URL = 'http://localhost:5005';
 
@@ -12,6 +14,8 @@ function SignupPage() {
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
+
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
@@ -25,7 +29,8 @@ function SignupPage() {
       .post(`${API_URL}/auth/signup`, requestBody)
       .then((response) => {
         console.log('user created!');
-        navigate('/');
+        setIsLoggedIn(true);
+        navigate('/user-profile');
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;

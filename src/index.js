@@ -5,14 +5,15 @@ import 'normalize.css';
 import './index.css';
 import App from './App';
 import { AuthProviderWrapper } from './context/auth.context';
+import { ProceduresProviderWrapper } from './context/procedures.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Router>
-      <AuthProviderWrapper>
+  <Router>
+    <AuthProviderWrapper>
+      <ProceduresProviderWrapper>
         <App />
-      </AuthProviderWrapper>
-    </Router>
-  </React.StrictMode>
+      </ProceduresProviderWrapper>
+    </AuthProviderWrapper>
+  </Router>
 );

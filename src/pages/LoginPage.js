@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth.context';
 
 const API_URL = 'http://localhost:5005';
 
@@ -11,7 +13,7 @@ function LoginPage() {
 
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  const navigate = useNavigate();
+  const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
@@ -24,8 +26,12 @@ function LoginPage() {
     axios
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
-        console.log('successfully logged in', response.data.authToken);
-        navigate('/');
+        console.log(
+          'successfully logged in! JWT Token:',
+          response.data.authToken
+        );
+        storeToken(response.data.authToken);
+        authenticateUser();
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;

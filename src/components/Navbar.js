@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth.context';
 
 import logo from '../assets/logo-doctor-dasha.png';
 
 function Navbar() {
+  const { isLoggedIn } = useContext(AuthContext);
+
   return (
     <Wrapper>
       <div className='nav'>
@@ -14,12 +18,18 @@ function Navbar() {
           <NavLink className='navlink' to='/services'>
             Services
           </NavLink>
-          <NavLink className='navlink' to='/signup'>
-            Sign Up
-          </NavLink>
-          <NavLink className='navlink' to='/login'>
-            Log In
-          </NavLink>
+
+          {!isLoggedIn && (
+            <NavLink className='navlink' to='/signup'>
+              Sign Up
+            </NavLink>
+          )}
+          {!isLoggedIn && (
+            <NavLink className='navlink' to='/login'>
+              Log In
+            </NavLink>
+          )}
+
           <NavLink className='navlink' to='/user-profile'>
             <i className='fa-solid fa-person-dress'></i>
           </NavLink>

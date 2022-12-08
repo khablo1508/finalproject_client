@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
-import IsAnon from './components/IsAnon';
 import IsPrivate from './components/IsPrivate';
 import HomePage from './pages/HomePage';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
-import UserProfile from './pages/UserProfile';
+import UserProfilePage from './pages/UserProfilePage';
+import ServicesPage from './pages/ServicesPage';
 
 function App() {
   return (
@@ -15,30 +15,17 @@ function App() {
 
       <Routes>
         <Route path='/' element={<HomePage />}></Route>
-        <Route
-          path='/signup'
-          element={
-            <IsAnon>
-              <SignupPage />
-            </IsAnon>
-          }
-        ></Route>
-        <Route
-          path='/login'
-          element={
-            <IsAnon>
-              <LoginPage />
-            </IsAnon>
-          }
-        ></Route>
+        <Route path='/signup' element={<SignupPage />}></Route>
+        <Route path='/login' element={<LoginPage />}></Route>
         <Route
           path='/user-profile'
           element={
             <IsPrivate>
-              <UserProfile />
+              <UserProfilePage />
             </IsPrivate>
           }
         />
+        <Route path='/services' element={<ServicesPage />}></Route>
       </Routes>
     </div>
   );

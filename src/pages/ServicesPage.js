@@ -5,7 +5,7 @@ import { AuthContext } from '../context/auth.context';
 import axios from 'axios';
 
 import Loading from '../components/Loading';
-import ProcedureCard from '../components/Card';
+import ProcedureCard from '../components/ProcedureCard';
 
 const API_URL = 'http://localhost:5005';
 
@@ -33,6 +33,7 @@ function ServicesPage() {
             return (
               <ProcedureCard
                 key={procedure._id}
+                id={procedure._id}
                 title={procedure.title}
                 code={procedure.code}
                 description={procedure.description}

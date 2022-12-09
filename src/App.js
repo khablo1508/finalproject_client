@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import UserProfilePage from './pages/UserProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage';
 import ServicesPage from './pages/ServicesPage';
+import CreateAppointmentPage from './pages/CreateAppointmentPage';
 
 function App() {
   return (
@@ -31,6 +32,14 @@ function App() {
           element={
             <IsPrivate>
               <EditUserProfilePage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path='/create-appointment'
+          element={
+            <IsPrivate>
+              <CreateAppointmentPage />
             </IsPrivate>
           }
         />

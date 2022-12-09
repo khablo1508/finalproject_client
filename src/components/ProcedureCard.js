@@ -1,8 +1,35 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { useContext } from 'react';
+import { ProceduresContext } from '../context/procedures.context';
+import { AuthContext } from '../context/auth.context';
+import axios from 'axios';
 
-function ProcedureCard({ title, code, description, duration, price }) {
+const API_URL = 'http://localhost:5005';
+
+function ProcedureCard({ id, title, code, description, duration, price }) {
+  const { setChosenProcedure } = useContext(ProceduresContext);
+  const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const addAppointment = () => {
+    const appointment = { id, title, description, duration, price };
+    const requestBody = { id, user };
+
+    axios
+      .post(`${API_URL}/services`, requestBody)
+      .then((response) =>
+        console.log('Here is the updated user: ', response.data)
+      );
+
+    setChosenProcedure(appointment);
+
+    navigate('/create-appointment');
+  };
+
   return (
     <Wrapper>
       <Card className='card'>
@@ -22,7 +49,9 @@ function ProcedureCard({ title, code, description, duration, price }) {
           <Card.Subtitle className='price'>
             <span>Price: </span>$ {price}
           </Card.Subtitle>
-          <Button className='book-btn'>Book an apointment</Button>
+          <Button className='book-btn' onClick={addAppointment}>
+            Book an appointment
+          </Button>
         </Card.Body>
       </Card>
     </Wrapper>

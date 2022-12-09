@@ -1,36 +1,38 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import axios from 'axios';
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { AuthContext } from '../context/auth.context';
 
 const API_URL = 'http://localhost:5005';
 
-function SignupPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+function EditUserProfilePage() {
+  const [newUsername, setNewUsername] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
 
+  const { user, setUser } = useContext(AuthContext);
+
+  const handleNewUsername = (e) => {
+    if (e.target.value === '') {
+      setNewUsername(user.username);
+    } else {
+      setNewUsername(e.target.value);
+    }
+  };
+
+  const { profileId } = useParams();
   const navigate = useNavigate();
 
-  const { setUser, setIsLoggedIn, storeToken } = useContext(AuthContext);
-
-  const handleEmail = (e) => setEmail(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value);
-  const handleUsername = (e) => setUsername(e.target.value);
-
-  const handleSignupSubmit = (e) => {
+  const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { username, email, password };
+
+    const requestBody = { newUsername, newPassword };
 
     axios
-      .post(`${API_URL}/auth/signup`, requestBody)
+      .put(`${API_URL}/update-profile/${profileId}`, requestBody)
       .then((response) => {
-        storeToken(response.data.authToken);
-        setUser(response.data.user);
-        setIsLoggedIn(true);
+        setUser(response.data);
         navigate('/user-profile');
       })
       .catch((error) => {
@@ -42,52 +44,37 @@ function SignupPage() {
   return (
     <Wrapper>
       <section>
-        <h1>Sign Up</h1>
+        <h1>Update Your Profile</h1>
 
         <div className='sign-form-container'>
-          <form className='sign-form' onSubmit={handleSignupSubmit}>
-            <div className='input-label-container'>
-              <label>Email:</label>
-              <input
-                type='email'
-                name='email'
-                value={email}
-                onChange={handleEmail}
-              />
-            </div>
-            <div className='input-label-container'>
-              <label>Password:</label>
-              <input
-                type='password'
-                name='password'
-                value={password}
-                onChange={handlePassword}
-              />
-            </div>
+          <form className='sign-form' onSubmit={handleUpdateSubmit}>
             <div className='input-label-container'>
               <label>Username:</label>
               <input
                 type='text'
                 name='username'
-                value={username}
-                onChange={handleUsername}
+                value={newUsername}
+                onChange={handleNewUsername}
+              />
+            </div>
+
+            <div className='input-label-container'>
+              <label>Password:</label>
+              <input
+                type='password'
+                name='password'
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
             </div>
 
             <button className='btn sign-btn' type='submit'>
-              Sign Up
+              Save
             </button>
           </form>
         </div>
 
         {errorMessage && <p className='error-message'>{errorMessage}</p>}
-
-        <div className='sign-suggestion'>
-          <p>Already have account?</p>
-          <Link className='link' to={'/login'}>
-            Login
-          </Link>
-        </div>
       </section>
     </Wrapper>
   );
@@ -97,7 +84,6 @@ const Wrapper = styled.main`
   section {
     width: 100vw;
     height: 85vh;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -155,4 +141,4 @@ const Wrapper = styled.main`
   }
 `;
 
-export default SignupPage;
+export default EditUserProfilePage;

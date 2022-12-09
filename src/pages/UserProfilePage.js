@@ -1,82 +1,46 @@
 import styled from 'styled-components';
-import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/auth.context';
 import pic from '../assets/profile-pic-test.png';
 
 function UserProfilePage() {
-  const { user } = useContext(AuthContext);
-  console.log(user);
+  const { user, logOutUser, authenticateUser } = useContext(AuthContext);
 
-  const [updateMode, setUpdateMode] = useState(false);
+  // useEffect(() => {
+  //   authenticateUser();
+  // }, []);
 
   return (
     <Wrapper>
       <section>
-        <div className='apointment-info'></div>
+        <div className='apointment-info'>
+          <h1>Your appointments</h1>
+        </div>
         <div className='profile-info'>
           <div className='avatar-container'>
-            <img src={pic} alt='user picture' />
-            {!updateMode && (
-              <button
-                class='btn delete-btn'
-                onClick={() => setUpdateMode(true)}
-              >
-                <i className='fa-solid fa-pen'></i>
-              </button>
-            )}
+            <img src={pic} alt='user' />
+            <Link to={`/update-profile/${user._id}`} className='btn delete-btn'>
+              <i className='fa-solid fa-pen'></i>
+            </Link>
           </div>
 
           <div className='info-container'>
             <div className='text-container'>
-              {!updateMode && (
-                <div className='user-info'>
-                  <h2>Username: {user.username}</h2>
-                  <h2>Email: {user.email}</h2>
-                </div>
-              )}
-
-              {updateMode && (
-                <form className='update-form'>
-                  <div className='input-label-container'>
-                    <label>Email:</label>
-                    <input
-                      type='email'
-                      name='email'
-                      value={user.email}
-                      // onChange={handleEmailUpdate}
-                    />
-                  </div>
-                  <div className='input-label-container'>
-                    <label>Password:</label>
-                    <input
-                      type='password'
-                      name='password'
-                      value={user.password}
-                      // onChange={handlePasswordUpdate}
-                    />
-                  </div>
-                  <div className='input-label-container'>
-                    <label>Username:</label>
-                    <input
-                      type='text'
-                      name='username'
-                      value={user.username}
-                      // onChange={handleUsernameUpdate}
-                    />
-                  </div>
-                  <button type='submit' className='btn'>
-                    Save
-                  </button>
-                </form>
-              )}
+              <div className='user-info'>
+                <h2>Username: {user.username}</h2>
+                <h2>Email: {user.email}</h2>
+              </div>
             </div>
             <div className='btns-container'>
               <form>
-                <button class='btn delete-btn'>Delete profile</button>
+                <button className='btn delete-btn'>Delete profile</button>
               </form>
 
               <form>
-                <button class='btn logout-btn'>Logout</button>
+                <button className='btn logout-btn' onClick={logOutUser}>
+                  Logout
+                </button>
               </form>
             </div>
           </div>
@@ -139,25 +103,37 @@ const Wrapper = styled.main`
     justify-content: space-between;
   }
   .info-container .text-container {
-    border: 2px solid blue;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 90%;
     height: 35%;
   }
   .info-container .text-container .update-form {
-    border: 2px solid red;
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .info-container .text-container .update-form button {
+    background: var(--clr-light);
   }
   .info-container .text-container .update-form .input-label-container {
     width: 100%;
-    border: 2px solid blue;
+
+    display: flex;
   }
-  .info-container .btns-container {
+  .info-container .text-container .update-form .input-label-container label {
+    width: 30%;
+  }
+  .info-container .text-container .update-form .input-label-container input {
+    padding-left: 10px;
+    width: 70%;
+  }
+  .btns-container {
     display: flex;
     flex-direction: column;
     align-items: center;

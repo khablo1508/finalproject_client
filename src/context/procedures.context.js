@@ -4,6 +4,7 @@ const ProceduresContext = React.createContext();
 
 function ProceduresProviderWrapper({ children }) {
   const [proceduresList, setProceduresList] = useState([]);
+  const [appointmentsList, setAppointmentsList] = useState([]);
   const [chosenProcedure, setChosenProcedure] = useState({});
 
   return (
@@ -13,6 +14,8 @@ function ProceduresProviderWrapper({ children }) {
         setProceduresList,
         chosenProcedure,
         setChosenProcedure,
+        appointmentsList,
+        setAppointmentsList,
       }}
     >
       {children}

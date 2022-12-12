@@ -10,6 +10,7 @@ function AuthProviderWrapper({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const [appointment, setAppointment] = useState(null);
 
   const storeToken = (token) => {
     // save token in the local storagr for further validation
@@ -22,7 +23,6 @@ function AuthProviderWrapper({ children }) {
   };
 
   const logOutUser = () => {
-    // <== ADD
     // To log out the user, remove the token
     removeToken();
     // and update the state variables
@@ -47,7 +47,7 @@ function AuthProviderWrapper({ children }) {
           setIsLoggedIn(true);
           setIsLoading(false);
           setUser(user);
-          navigate('/user-profile');
+          navigate(`/user-profile/${user._id}`);
         })
         .catch((error) => {
           // If the server sends an error response (invalid token)
@@ -77,6 +77,8 @@ function AuthProviderWrapper({ children }) {
         setIsLoading,
         user,
         setUser,
+        appointment,
+        setAppointment,
         storeToken,
         removeToken,
         logOutUser,

@@ -88,7 +88,6 @@ const Wrapper = styled.main`
   section {
     width: 100vw;
     height: 85vh;
-
     display: flex;
     flex-direction: column;
     justify-content: center;

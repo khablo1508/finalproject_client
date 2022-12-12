@@ -31,7 +31,7 @@ function SignupPage() {
         storeToken(response.data.authToken);
         setUser(response.data.user);
         setIsLoggedIn(true);
-        navigate('/user-profile');
+        navigate(`/user-profile/${response.data.user._id}`);
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;

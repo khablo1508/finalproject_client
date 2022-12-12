@@ -20,7 +20,7 @@ function App() {
         <Route path='/signup' element={<SignupPage />}></Route>
         <Route path='/login' element={<LoginPage />}></Route>
         <Route
-          path='/user-profile'
+          path='/user-profile/:profileId'
           element={
             <IsPrivate>
               <UserProfilePage />
@@ -36,7 +36,7 @@ function App() {
           }
         />
         <Route
-          path='/create-appointment'
+          path='/create-appointment/:appId'
           element={
             <IsPrivate>
               <CreateAppointmentPage />

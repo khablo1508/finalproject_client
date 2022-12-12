@@ -1,39 +1,13 @@
+import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { useContext } from 'react';
-import { AuthContext } from '../context/auth.context';
-import axios from 'axios';
 
-const API_URL = 'http://localhost:5005';
-
-function ProcedureCard({ id, title, code, description, duration, price }) {
-  const { user } = useContext(AuthContext);
-
-  const navigate = useNavigate();
-
-  const addAppointment = () => {
-    const requestBody = { id, user };
-
-    axios.post(`${API_URL}/services`, requestBody).then((response) => {
-      console.log(response.data._id);
-      navigate(`/create-appointment/${response.data._id}`);
-    });
-  };
-
+function AppointmentCard({ title, duration, price, date, status }) {
   return (
     <Wrapper>
       <Card className='card'>
-        <Card.Img
-          variant='top'
-          src={require(`../assets/${code}.jpg`)}
-          alt='card image'
-          className='card-img'
-        />
         <Card.Body className='card-body'>
           <Card.Title className='title'>{title}</Card.Title>
-          <Card.Text className='description'>{description}</Card.Text>
           <Card.Subtitle className='duration'>
             <span>Duration: </span>
             {duration}
@@ -41,9 +15,15 @@ function ProcedureCard({ id, title, code, description, duration, price }) {
           <Card.Subtitle className='price'>
             <span>Price: </span>$ {price}
           </Card.Subtitle>
-          <Button className='book-btn' onClick={addAppointment}>
-            Book an appointment
-          </Button>
+          <Card.Subtitle className='date'>
+            <span>Date: </span> {date}
+          </Card.Subtitle>
+          <Card.Subtitle className='status'>
+            <span>Status: </span>{' '}
+            {status === 'pending' && 'Waiting for approval'}
+            {status === 'approved' && 'Approved'}
+            {status === 'declined' && 'Declined'}
+          </Card.Subtitle>
         </Card.Body>
       </Card>
     </Wrapper>
@@ -95,4 +75,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default ProcedureCard;
+export default AppointmentCard;

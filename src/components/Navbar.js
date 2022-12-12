@@ -30,7 +30,7 @@ function Navbar() {
             </NavLink>
           )}
 
-          <NavLink className='navlink' to='/user-profile'>
+          <NavLink className='navlink' to='/user-profile/:profileId'>
             <i className='fa-solid fa-person-dress'></i>
           </NavLink>
         </div>

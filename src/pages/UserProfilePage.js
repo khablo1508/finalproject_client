@@ -1,21 +1,55 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/auth.context';
+import { ProceduresContext } from '../context/procedures.context';
+import axios from 'axios';
 import pic from '../assets/profile-pic-test.png';
 
-function UserProfilePage() {
-  const { user, logOutUser, authenticateUser } = useContext(AuthContext);
+import AppointmentCard from '../components/AppointmentCard';
 
-  // useEffect(() => {
-  //   authenticateUser();
-  // }, []);
+const API_URL = 'http://localhost:5005';
+
+function UserProfilePage() {
+  const { user, logOutUser, isLoading } = useContext(AuthContext);
+  const { appointmentsList, setAppointmentsList } =
+    useContext(ProceduresContext);
+  const { profileId } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/user-profile/${profileId}`)
+      .then((foundUser) => {
+        console.log(foundUser.data.appointments);
+        setAppointmentsList(foundUser.data.appointments);
+      })
+
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Wrapper>
       <section>
         <div className='apointment-info'>
           <h1>Your appointments</h1>
+
+          {!isLoading && (
+            <section>
+              {appointmentsList.length === 0 && <h2>No appointments yet</h2>}
+
+              {appointmentsList.map((appointment) => {
+                return (
+                  <AppointmentCard
+                    title={appointment.procedure.title}
+                    duration={appointment.procedure.duration}
+                    price={appointment.procedure.price}
+                    date={appointment.date}
+                    status={appointment.status}
+                  ></AppointmentCard>
+                );
+              })}
+            </section>
+          )}
         </div>
         <div className='profile-info'>
           <div className='avatar-container'>

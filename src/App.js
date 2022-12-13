@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import UserProfilePage from './pages/UserProfilePage';
+import AdminProfilePage from './pages/AdminProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage';
 import ServicesPage from './pages/ServicesPage';
 import CreateAppointmentPage from './pages/CreateAppointmentPage';
@@ -24,6 +25,14 @@ function App() {
           element={
             <IsPrivate>
               <UserProfilePage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path='/admin-profile/'
+          element={
+            <IsPrivate>
+              <AdminProfilePage />
             </IsPrivate>
           }
         />

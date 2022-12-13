@@ -52,21 +52,23 @@ function ProcedureCard({ id, title, code, description, duration, price }) {
 
 const Wrapper = styled.div`
   .card {
-    background: #fff;
     border-radius: 10px;
+    background: #fff;
     height: 450px;
+    max-width: 300px;
     display: flex;
     flex-direction: column;
-
     align-items: center;
   }
   .card-img {
+    border-radius: 0 0 30% 50%;
     width: 100%;
     height: 50%;
     margin-bottom: 15px;
   }
   .card-body {
     margin-bottom: 10px;
+
     height: 60%;
     display: flex;
     flex-direction: column;

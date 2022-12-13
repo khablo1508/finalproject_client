@@ -6,7 +6,7 @@ function AppointmentCard({ title, duration, price, date, status }) {
   return (
     <Wrapper>
       <Card className='card'>
-        <Card.Body className='card-body'>
+        <Card.Body className={`card-body ${status}`}>
           <Card.Title className='title'>{title}</Card.Title>
           <Card.Subtitle className='duration'>
             <span>Duration: </span>
@@ -32,13 +32,22 @@ function AppointmentCard({ title, duration, price, date, status }) {
 
 const Wrapper = styled.div`
   .card {
-    background: #fff;
-    border-radius: 10px;
     height: 450px;
     display: flex;
     flex-direction: column;
-
     align-items: center;
+  }
+  .pending {
+    background: #fff;
+    box-shadow: 5px 5px 10px #d6b1a4;
+  }
+  .approved {
+    background: #d2e7d6;
+    box-shadow: 5px 5px 10px #b8d8be;
+  }
+  .declined {
+    background: #fdaaaa;
+    box-shadow: 5px 5px 10px #f97c7c;
   }
   .card-img {
     width: 100%;
@@ -46,6 +55,7 @@ const Wrapper = styled.div`
     margin-bottom: 15px;
   }
   .card-body {
+    border-radius: 10px;
     margin-bottom: 10px;
     height: 60%;
     display: flex;

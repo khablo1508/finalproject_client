@@ -26,10 +26,6 @@ function LoginPage() {
     axios
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
-        console.log(
-          'successfully logged in! JWT Token:',
-          response.data.authToken
-        );
         storeToken(response.data.authToken);
         authenticateUser();
       })

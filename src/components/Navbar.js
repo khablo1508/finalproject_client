@@ -6,7 +6,7 @@ import { AuthContext } from '../context/auth.context';
 import logo from '../assets/logo-doctor-dasha.png';
 
 function Navbar() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, isAdmin, logOutUser } = useContext(AuthContext);
 
   return (
     <Wrapper>
@@ -30,9 +30,25 @@ function Navbar() {
             </NavLink>
           )}
 
-          <NavLink className='navlink' to='/user-profile/:profileId'>
-            <i className='fa-solid fa-person-dress'></i>
-          </NavLink>
+          {isAdmin && (
+            <NavLink className='navlink' to='/admin-profile'>
+              <i className='fa-solid fa-unlock-keyhole'></i>
+            </NavLink>
+          )}
+          {!isAdmin && (
+            <NavLink
+              className='navlink'
+              to={isAdmin ? '/user-profile/:profileId' : '/admin-profile'}
+            >
+              <i className='fa-solid fa-person-dress'></i>
+            </NavLink>
+          )}
+
+          {isAdmin && (
+            <button className='navlink' onClick={logOutUser}>
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </Wrapper>
@@ -81,7 +97,9 @@ const Wrapper = styled.nav`
     background: #f6f0e7;
     color: #734938;
     border-radius: 10px;
+    border: none;
     font-size: 20px;
+    cursor: pointer;
   }
 `;
 

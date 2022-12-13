@@ -7,6 +7,7 @@ const AuthContext = React.createContext();
 
 function AuthProviderWrapper({ children }) {
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
@@ -43,11 +44,20 @@ function AuthProviderWrapper({ children }) {
         .then((response) => {
           // If the server verifies that JWT token is valid
           const user = response.data;
-          // Update state variables
-          setIsLoggedIn(true);
-          setIsLoading(false);
-          setUser(user);
-          navigate(`/user-profile/${user._id}`);
+
+          // check if admin
+          if (user.email === 'khablo.anna@gmail.com') {
+            setIsAdmin(true);
+            setIsLoggedIn(true);
+            setIsLoading(false);
+            setUser(user);
+            navigate('/admin-profile');
+          } else {
+            setIsLoggedIn(true);
+            setIsLoading(false);
+            setUser(user);
+            navigate(`/user-profile/${user._id}`);
+          }
         })
         .catch((error) => {
           // If the server sends an error response (invalid token)
@@ -59,6 +69,7 @@ function AuthProviderWrapper({ children }) {
     } else {
       // If the token is not available (or is removed)
       setIsLoggedIn(false);
+      setIsAdmin(false);
       setIsLoading(false);
       setUser(null);
     }
@@ -71,6 +82,8 @@ function AuthProviderWrapper({ children }) {
   return (
     <AuthContext.Provider
       value={{
+        isAdmin,
+        setIsAdmin,
         isLoggedIn,
         setIsLoggedIn,
         isLoading,

@@ -15,7 +15,8 @@ function SignupPage() {
 
   const navigate = useNavigate();
 
-  const { setUser, setIsLoggedIn, storeToken } = useContext(AuthContext);
+  const { setUser, setIsLoggedIn, setIsAdmin, storeToken } =
+    useContext(AuthContext);
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
@@ -31,7 +32,12 @@ function SignupPage() {
         storeToken(response.data.authToken);
         setUser(response.data.user);
         setIsLoggedIn(true);
-        navigate(`/user-profile/${response.data.user._id}`);
+        if (response.data.user.email === 'khablo.anna@gmail.com') {
+          setIsAdmin(true);
+          navigate('/admin-profile');
+        } else {
+          navigate(`/user-profile/${response.data.user._id}`);
+        }
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;

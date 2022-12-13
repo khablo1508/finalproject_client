@@ -33,7 +33,7 @@ function EditUserProfilePage() {
       .put(`${API_URL}/update-profile/${profileId}`, requestBody)
       .then((response) => {
         setUser(response.data);
-        navigate('/user-profile');
+        navigate(`/user-profile/${profileId}`);
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;

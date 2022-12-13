@@ -8,6 +8,7 @@ const API_URL = 'http://localhost:5005';
 
 function CreateAppointmentPage() {
   const [appDate, setAppDate] = useState('');
+  const [appTime, setAppTime] = useState('');
   const [userId, setUserId] = useState('');
 
   const { appId } = useParams();
@@ -19,6 +20,7 @@ function CreateAppointmentPage() {
       .get(`${API_URL}/create-appointment/${appId}`)
       .then((foundAppointment) => {
         setChosenProcedure(foundAppointment.data);
+        console.log(chosenProcedure);
         setUserId(foundAppointment.data.user);
       })
       .catch((err) => console.log(err));
@@ -26,12 +28,18 @@ function CreateAppointmentPage() {
 
   const requestAppointment = (e) => {
     e.preventDefault();
-    const requestBody = { appDate, userId };
+    const requestBody = { appDate, appTime, userId };
+
+    axios
+      .put(`${API_URL}/create-appointment/${appId}`, requestBody)
+      .then((response) => {
+        console.log('user updated:', response.data);
+      });
 
     axios
       .post(`${API_URL}/create-appointment/${appId}`, requestBody)
       .then((response) => {
-        console.log('user updated:', response.data);
+        console.log('request created', response.data);
         navigate(`/user-profile/${userId}`);
       });
   };
@@ -42,20 +50,31 @@ function CreateAppointmentPage() {
         <div className='sign-form-container'>
           <h1>Create an appointment request</h1>
           <div className='sign-form'>
-            <h3>Procedure: {chosenProcedure.procedure.title} </h3>
+            {/* <h3>Procedure: {chosenProcedure.procedure.title} </h3>
             <h3>Duration: {chosenProcedure.procedure.duration} </h3>
-            <h3>Price: ${chosenProcedure.procedure.price} </h3>
+            <h3>Price: ${chosenProcedure.procedure.price} </h3> */}
             <form
               className='input-label-container'
               onSubmit={requestAppointment}
             >
-              <label>Date: </label>
-              <input
-                type='date'
-                name='date'
-                value={appDate}
-                onChange={(e) => setAppDate(e.target.value)}
-              />
+              <div className='input-label-container'>
+                <label>Date: </label>
+                <input
+                  type='date'
+                  name='date'
+                  value={appDate}
+                  onChange={(e) => setAppDate(e.target.value)}
+                />
+              </div>
+              <div className='input-label-container'>
+                <label>Time: </label>
+                <input
+                  type='time'
+                  name='time'
+                  value={appTime}
+                  onChange={(e) => setAppTime(e.target.value)}
+                />
+              </div>
               <button className='btn sign-btn' type='submit'>
                 Request an appointment
               </button>

@@ -10,6 +10,7 @@ function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [tel, setTel] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
@@ -20,10 +21,11 @@ function SignupPage() {
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
   const handleUsername = (e) => setUsername(e.target.value);
+  const handleTel = (e) => setTel(e.target.value);
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { username, email, password };
+    const requestBody = { username, email, password, tel };
 
     axios
       .post(`${API_URL}/auth/signup`, requestBody)
@@ -69,13 +71,24 @@ function SignupPage() {
             />
           </div>
           <div className='input-label-container'>
-            <label>Username:</label>
+            <label>Full name:</label>
             <input
               type='text'
               name='username'
               value={username}
               onChange={handleUsername}
             />
+          </div>
+          <div className='input-label-container'>
+            <label>Phone number:</label>
+            <input
+              type='tel'
+              name='phone'
+              pattern='[0-9]{3}-[0-9]{2}-[0-9]{3}'
+              value={tel}
+              onChange={handleTel}
+            />
+            <small>Format: 123-45-678</small>
           </div>
 
           <button className='btn sign-btn' type='submit'>

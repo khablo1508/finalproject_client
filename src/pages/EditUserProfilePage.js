@@ -1,23 +1,22 @@
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { AuthContext } from '../context/auth.context';
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function EditUserProfilePage() {
-  const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [newTel, setNewTel] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const { user, setUser } = useContext(AuthContext);
 
-  const handleNewUsername = (e) => {
+  const handleNewTel = (e) => {
     if (e.target.value === '') {
-      setNewUsername(user.username);
+      setNewTel(user.tel);
     } else {
-      setNewUsername(e.target.value);
+      setNewTel(e.target.value);
     }
   };
 
@@ -27,7 +26,7 @@ function EditUserProfilePage() {
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
 
-    const requestBody = { newUsername, newPassword };
+    const requestBody = { newPassword, newTel };
 
     axios
       .put(`${API_URL}/update-profile/${profileId}`, requestBody)
@@ -49,16 +48,6 @@ function EditUserProfilePage() {
         <div className='sign-form-container'>
           <form className='sign-form' onSubmit={handleUpdateSubmit}>
             <div className='input-label-container'>
-              <label>Username:</label>
-              <input
-                type='text'
-                name='username'
-                value={newUsername}
-                onChange={handleNewUsername}
-              />
-            </div>
-
-            <div className='input-label-container'>
               <label>Password:</label>
               <input
                 type='password'
@@ -66,6 +55,17 @@ function EditUserProfilePage() {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
               />
+            </div>
+            <div className='input-label-container'>
+              <label>Tel:</label>
+              <input
+                type='tel'
+                name='phone'
+                value={newTel}
+                pattern='[0-9]{3}-[0-9]{2}-[0-9]{3}'
+                onChange={handleNewTel}
+              />
+              <small>Format: 123-45-678</small>
             </div>
 
             <button className='btn sign-btn' type='submit'>
@@ -79,66 +79,5 @@ function EditUserProfilePage() {
     </main>
   );
 }
-
-const Wrapper = styled.main`
-  /* .sign-form-section {
-    width: 100vw;
-    height: 85vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  } */
-  /* .sign-form-container {
-    width: 50%;
-    max-width: 500px;
-    min-width: 300px;
-    height: 70%;
-    max-height: 500px;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    background: #edcdc0;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  } */
-  /* .sign-form {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-  } */
-  /* .sign-form .input-label-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
-  } */
-  /* .sign-form input {
-    width: 90%;
-  } */
-  /* .sign-suggestion {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    width: 40%;
-  }
-  .sign-suggestion p {
-    font-size: 20px;
-  }
-  .link {
-    text-decoration: none;
-    color: var(--clr-bourdeaux);
-    font-size: 25px;
-  } */
-`;
 
 export default EditUserProfilePage;

@@ -45,12 +45,12 @@ function UserProfilePage() {
               {appointmentsList?.map((appointment) => {
                 return (
                   <AppointmentCard
-                    key={appointment._id}
-                    title={appointment.procedure.title}
-                    duration={appointment.procedure.duration}
-                    price={appointment.procedure.price}
-                    date={appointment.date}
-                    status={appointment.status}
+                    key={appointment?._id}
+                    title={appointment.procedure?.title}
+                    duration={appointment.procedure?.duration}
+                    price={appointment.procedure?.price}
+                    date={appointment?.date}
+                    status={appointment?.status}
                   ></AppointmentCard>
                 );
               })}

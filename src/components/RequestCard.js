@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { ProceduresContext } from '../context/procedures.context';
 
-const API_URL = 'http://localhost:5005';
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function RequestCard({
   reqId,

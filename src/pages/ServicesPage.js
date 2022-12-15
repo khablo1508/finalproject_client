@@ -7,7 +7,7 @@ import axios from 'axios';
 import Loading from '../components/Loading';
 import ProcedureCard from '../components/ProcedureCard';
 
-const API_URL = 'http://localhost:5005';
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function ServicesPage() {
   const { proceduresList, setProceduresList } = useContext(ProceduresContext);

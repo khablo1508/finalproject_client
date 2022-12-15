@@ -8,7 +8,7 @@ import pic from '../assets/profile-pic-test.png';
 
 import AppointmentCard from '../components/AppointmentCard';
 
-const API_URL = 'http://localhost:5005';
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function UserProfilePage() {
   const { user, logOutUser, isLoading } = useContext(AuthContext);

@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AuthContext } from '../context/auth.context';
 
-const API_URL = 'http://localhost:5005';
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function EditUserProfilePage() {
   const [newUsername, setNewUsername] = useState('');

@@ -5,8 +5,7 @@ import { ProceduresContext } from '../context/procedures.context';
 import axios from 'axios';
 
 import Loading from '../components/Loading';
-
-const API_URL = 'http://localhost:5005';
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function CreateAppointmentPage() {
   const [appDate, setAppDate] = useState('');

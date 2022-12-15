@@ -5,6 +5,9 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
+import { useContext } from 'react';
+import { ProceduresContext } from '../context/procedures.context';
+
 const API_URL = 'http://localhost:5005';
 
 function RequestCard({
@@ -100,6 +103,7 @@ const Wrapper = styled.div`
   .card-body {
     border-radius: 10px;
     margin-bottom: 10px;
+    padding: 10px 0;
     height: 100%;
     width: 100%;
     display: flex;

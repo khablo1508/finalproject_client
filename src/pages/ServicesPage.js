@@ -29,7 +29,7 @@ function ServicesPage() {
 
       {!isLoading && (
         <section>
-          {proceduresList.map((procedure) => {
+          {proceduresList?.map((procedure) => {
             return (
               <ProcedureCard
                 key={procedure._id}

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useContext } from 'react';
@@ -9,7 +10,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:5005';
 
 function ProcedureCard({ id, title, code, description, duration, price }) {
-  const { user } = useContext(AuthContext);
+  const { user, isAdmin } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -20,6 +21,10 @@ function ProcedureCard({ id, title, code, description, duration, price }) {
       console.log(response.data._id);
       navigate(`/create-appointment/${response.data._id}`);
     });
+  };
+
+  const editService = () => {
+    axios.delete(`${API_URL}/services`);
   };
 
   return (
@@ -41,9 +46,15 @@ function ProcedureCard({ id, title, code, description, duration, price }) {
           <Card.Subtitle className='price'>
             <span>Price: </span>$ {price}
           </Card.Subtitle>
-          <Button className='book-btn' onClick={addAppointment}>
-            Book an appointment
-          </Button>
+          {!isAdmin ? (
+            <Button className='book-btn btn' onClick={addAppointment}>
+              Book an appointment
+            </Button>
+          ) : (
+            <Link to={`/edit-procedure/${id}`} className='btn delete-btn'>
+              Edit
+            </Link>
+          )}
         </Card.Body>
       </Card>
     </Wrapper>
@@ -91,7 +102,7 @@ const Wrapper = styled.div`
     text-align: justify;
     font-size: 18px;
   }
-  .card-body .book-btn {
+  .card-body .btn {
     background: var(--clr-bourdeaux);
     color: var(--clr-ivory);
   }

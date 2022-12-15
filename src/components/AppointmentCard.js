@@ -32,7 +32,8 @@ function AppointmentCard({ title, duration, price, date, status }) {
 
 const Wrapper = styled.div`
   .card {
-    height: 450px;
+    height: 250px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,15 +50,13 @@ const Wrapper = styled.div`
     background: #fdaaaa;
     box-shadow: 5px 5px 10px #f97c7c;
   }
-  .card-img {
-    width: 100%;
-    height: 50%;
-    margin-bottom: 15px;
-  }
+
   .card-body {
     border-radius: 10px;
     margin-bottom: 10px;
-    height: 60%;
+    padding: 10px 0;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

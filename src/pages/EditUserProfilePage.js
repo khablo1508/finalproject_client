@@ -42,8 +42,8 @@ function EditUserProfilePage() {
   };
 
   return (
-    <Wrapper>
-      <section>
+    <main>
+      <section className='sign-form-section'>
         <h1>Update Your Profile</h1>
 
         <div className='sign-form-container'>
@@ -76,20 +76,20 @@ function EditUserProfilePage() {
 
         {errorMessage && <p className='error-message'>{errorMessage}</p>}
       </section>
-    </Wrapper>
+    </main>
   );
 }
 
 const Wrapper = styled.main`
-  section {
+  /* .sign-form-section {
     width: 100vw;
     height: 85vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  .sign-form-container {
+  } */
+  /* .sign-form-container {
     width: 50%;
     max-width: 500px;
     min-width: 300px;
@@ -104,27 +104,27 @@ const Wrapper = styled.main`
     background: #edcdc0;
     border-radius: 10px;
     margin-bottom: 15px;
-  }
-  .sign-form {
+  } */
+  /* .sign-form {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-  }
-  .sign-form .input-label-container {
+  } */
+  /* .sign-form .input-label-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     gap: 5px;
-  }
-  .sign-form input {
+  } */
+  /* .sign-form input {
     width: 90%;
-  }
-  .sign-suggestion {
+  } */
+  /* .sign-suggestion {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -138,7 +138,7 @@ const Wrapper = styled.main`
     text-decoration: none;
     color: var(--clr-bourdeaux);
     font-size: 25px;
-  }
+  } */
 `;
 
 export default EditUserProfilePage;

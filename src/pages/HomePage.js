@@ -41,7 +41,7 @@ const Wrapper = styled.main`
   }
   .home-img-container {
     height: 100%;
-    width: 35%;
+    width: 30%;
     display: flex;
     align-items: flex-end;
   }

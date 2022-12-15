@@ -10,6 +10,8 @@ import AdminProfilePage from './pages/AdminProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage';
 import ServicesPage from './pages/ServicesPage';
 import CreateAppointmentPage from './pages/CreateAppointmentPage';
+import ErrorPage from './pages/ErrorPage';
+import EditServicePage from './pages/EditServicePage';
 
 function App() {
   return (
@@ -17,9 +19,9 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path='/' element={<HomePage />}></Route>
-        <Route path='/signup' element={<SignupPage />}></Route>
-        <Route path='/login' element={<LoginPage />}></Route>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/signup' element={<SignupPage />} />
+        <Route path='/login' element={<LoginPage />} />
         <Route
           path='/user-profile/:profileId'
           element={
@@ -52,7 +54,16 @@ function App() {
             </IsPrivate>
           }
         />
-        <Route path='/services' element={<ServicesPage />}></Route>
+        <Route path='/services' element={<ServicesPage />} />
+        <Route
+          path='/edit-procedure/:procedureId'
+          element={
+            <IsPrivate>
+              <EditServicePage />
+            </IsPrivate>
+          }
+        />
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
     </div>
   );

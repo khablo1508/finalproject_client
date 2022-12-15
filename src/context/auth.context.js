@@ -28,6 +28,7 @@ function AuthProviderWrapper({ children }) {
     removeToken();
     // and update the state variables
     authenticateUser();
+    navigate('/');
   };
 
   const authenticateUser = () => {

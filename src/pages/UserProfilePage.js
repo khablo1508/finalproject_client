@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/auth.context';
 import { ProceduresContext } from '../context/procedures.context';
@@ -14,7 +14,12 @@ function UserProfilePage() {
   const { user, logOutUser, isLoading } = useContext(AuthContext);
   const { appointmentsList, setAppointmentsList } =
     useContext(ProceduresContext);
+  const navigate = useNavigate();
   const { profileId } = useParams();
+
+  const handleClick = () => {
+    navigate(`/update-profile/${user._id}`);
+  };
 
   useEffect(() => {
     axios
@@ -34,10 +39,10 @@ function UserProfilePage() {
           <h1>Your appointments</h1>
 
           {!isLoading && (
-            <section>
-              {appointmentsList.length === 0 && <h2>No appointments yet</h2>}
+            <section className='cards-container'>
+              {appointmentsList?.length === 0 && <h2>No appointments yet</h2>}
 
-              {appointmentsList.map((appointment) => {
+              {appointmentsList?.map((appointment) => {
                 return (
                   <AppointmentCard
                     key={appointment._id}
@@ -55,9 +60,9 @@ function UserProfilePage() {
         <div className='profile-info'>
           <div className='avatar-container'>
             <img src={pic} alt='user' />
-            <Link to={`/update-profile/${user._id}`} className='btn delete-btn'>
+            <button className='btn delete-btn' onClick={handleClick}>
               <i className='fa-solid fa-pen'></i>
-            </Link>
+            </button>
           </div>
 
           <div className='info-container'>
@@ -95,6 +100,15 @@ const Wrapper = styled.main`
   .apointment-info {
     width: 70%;
     border-right: 5px dotted var(--clr-bourdeaux);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .cards-container {
+    padding: 20px 30px;
+    width: 100%;
+    display: flex;
+    gap: 20px;
   }
 
   /* rigth-side */
@@ -158,7 +172,6 @@ const Wrapper = styled.main`
   }
   .info-container .text-container .update-form .input-label-container {
     width: 100%;
-
     display: flex;
   }
   .info-container .text-container .update-form .input-label-container label {

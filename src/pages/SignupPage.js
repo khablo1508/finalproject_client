@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import axios from 'axios';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
@@ -46,119 +45,55 @@ function SignupPage() {
   };
 
   return (
-    <Wrapper>
-      <section>
-        <h1>Sign Up</h1>
+    <section className='sign-form-section'>
+      <h1>Sign Up</h1>
 
-        <div className='sign-form-container'>
-          <form className='sign-form' onSubmit={handleSignupSubmit}>
-            <div className='input-label-container'>
-              <label>Email:</label>
-              <input
-                type='email'
-                name='email'
-                value={email}
-                onChange={handleEmail}
-              />
-            </div>
-            <div className='input-label-container'>
-              <label>Password:</label>
-              <input
-                type='password'
-                name='password'
-                value={password}
-                onChange={handlePassword}
-              />
-            </div>
-            <div className='input-label-container'>
-              <label>Username:</label>
-              <input
-                type='text'
-                name='username'
-                value={username}
-                onChange={handleUsername}
-              />
-            </div>
+      <div className='sign-form-container'>
+        <form className='sign-form' onSubmit={handleSignupSubmit}>
+          <div className='input-label-container'>
+            <label>Email:</label>
+            <input
+              type='email'
+              name='email'
+              value={email}
+              onChange={handleEmail}
+            />
+          </div>
+          <div className='input-label-container'>
+            <label>Password:</label>
+            <input
+              type='password'
+              name='password'
+              value={password}
+              onChange={handlePassword}
+            />
+          </div>
+          <div className='input-label-container'>
+            <label>Username:</label>
+            <input
+              type='text'
+              name='username'
+              value={username}
+              onChange={handleUsername}
+            />
+          </div>
 
-            <button className='btn sign-btn' type='submit'>
-              Sign Up
-            </button>
-          </form>
-        </div>
+          <button className='btn sign-btn' type='submit'>
+            Sign Up
+          </button>
+        </form>
+      </div>
 
-        {errorMessage && <p className='error-message'>{errorMessage}</p>}
+      {errorMessage && <p className='error-message'>{errorMessage}</p>}
 
-        <div className='sign-suggestion'>
-          <p>Already have account?</p>
-          <Link className='link' to={'/login'}>
-            Login
-          </Link>
-        </div>
-      </section>
-    </Wrapper>
+      <div className='sign-suggestion'>
+        <p>Already have account?</p>
+        <Link className='sign-link' to={'/login'}>
+          Login
+        </Link>
+      </div>
+    </section>
   );
 }
-
-const Wrapper = styled.main`
-  section {
-    width: 100vw;
-    height: 85vh;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .sign-form-container {
-    width: 50%;
-    max-width: 500px;
-    min-width: 300px;
-    height: 70%;
-    max-height: 500px;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    background: #edcdc0;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  }
-  .sign-form {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-  .sign-form .input-label-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
-  }
-  .sign-form input {
-    width: 90%;
-  }
-  .sign-suggestion {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    width: 40%;
-  }
-  .sign-suggestion p {
-    font-size: 20px;
-  }
-  .link {
-    text-decoration: none;
-    color: var(--clr-bourdeaux);
-    font-size: 25px;
-  }
-`;
 
 export default SignupPage;

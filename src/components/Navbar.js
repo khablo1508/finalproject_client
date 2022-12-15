@@ -36,10 +36,7 @@ function Navbar() {
             </NavLink>
           )}
           {!isAdmin && (
-            <NavLink
-              className='navlink'
-              to={isAdmin ? '/user-profile/:profileId' : '/admin-profile'}
-            >
+            <NavLink className='navlink' to='/user-profile/:profileId'>
               <i className='fa-solid fa-person-dress'></i>
             </NavLink>
           )}

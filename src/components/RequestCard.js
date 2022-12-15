@@ -17,34 +17,30 @@ function RequestCard({
   appStatus,
   appId,
 }) {
-  const [displayStatus, setDisplayStatus] = useState('display-block');
   const [status, setStatus] = useState('pending');
+  const [disabled, setDisabled] = useState(false);
 
   const approveRequest = () => {
-    const requestBody = { appStatus, appId, decision: 'approved', reqId };
-    setDisplayStatus('display-none');
-    setStatus('approved');
+    const requestBody = { appId, decision: 'approved', reqId };
     axios.put(`${API_URL}/admin-profile`, requestBody).then((response) => {
-      console.log(response.data);
+      setStatus('approved');
+      setDisabled(true);
     });
   };
 
   const declineRequest = () => {
-    const requestBody = { appStatus, appId, decision: 'declined', reqId };
-    setDisplayStatus('display-none');
-    setStatus('declined');
+    const requestBody = { appId, decision: 'declined', reqId };
     axios.put(`${API_URL}/admin-profile`, requestBody).then((response) => {
-      console.log(response.data);
+      setStatus('declined');
+      setDisabled(true);
     });
   };
-
-  useEffect(() => {}, [appStatus]);
 
   return (
     <Wrapper>
       <section>
         <Card className='card'>
-          <Card.Body className={`card-body ${status}`}>
+          <Card.Body className={`card-body ${appStatus} ${status}`}>
             <Card.Title className='title'>{title}</Card.Title>
             <Card.Subtitle className='price'>
               <span>Date: </span>
@@ -60,18 +56,18 @@ function RequestCard({
             <Card.Subtitle className='date'>
               <span>Contact: </span> {client.tel}
             </Card.Subtitle>
-            <Button
-              className={`approve-btn btn ${displayStatus}`}
-              onClick={approveRequest}
+            <div
+              className={`btns-container ${
+                appStatus !== 'pending' ? 'btns-none' : ''
+              } `}
             >
-              Approve
-            </Button>
-            <Button
-              className={`decline-btn btn ${displayStatus}`}
-              onClick={declineRequest}
-            >
-              Decline
-            </Button>
+              <Button className='approve-btn btn' onClick={approveRequest}>
+                Approve
+              </Button>
+              <Button className='decline-btn btn ' onClick={declineRequest}>
+                Decline
+              </Button>
+            </div>
           </Card.Body>
         </Card>
       </section>
@@ -99,12 +95,10 @@ const Wrapper = styled.div`
     background: #fdaaaa;
     box-shadow: 5px 5px 10px #f97c7c;
   }
-  .display-block {
-    display: block;
-  }
-  .display-none {
+  .btns-none {
     display: none;
   }
+
   .card-img {
     width: 100%;
     height: 50%;

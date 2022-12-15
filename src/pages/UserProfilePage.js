@@ -34,7 +34,7 @@ function UserProfilePage() {
 
   return (
     <Wrapper>
-      <section>
+      <section className='user-profile'>
         <div className='apointment-info'>
           <h1>Your appointments</h1>
 
@@ -87,7 +87,7 @@ function UserProfilePage() {
 }
 
 const Wrapper = styled.main`
-  section {
+  .user-profile {
     width: 100vw;
     height: 85vh;
     display: flex;
@@ -95,6 +95,7 @@ const Wrapper = styled.main`
   /* left side */
   .apointment-info {
     width: 70%;
+    height: 100%;
     border-right: 5px dotted var(--clr-bourdeaux);
     display: flex;
     flex-direction: column;
@@ -103,11 +104,12 @@ const Wrapper = styled.main`
   .cards-container {
     padding: 20px 30px;
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 20px;
   }
 
-  /* rigth-side */
+  /* right-side */
   .profile-info {
     width: 30%;
     height: 98%;

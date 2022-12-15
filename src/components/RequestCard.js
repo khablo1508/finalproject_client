@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-
-import { useContext } from 'react';
-import { ProceduresContext } from '../context/procedures.context';
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -20,11 +17,13 @@ function RequestCard({
   appStatus,
   appId,
 }) {
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [displayStatus, setDisplayStatus] = useState('display-block');
+  const [status, setStatus] = useState('pending');
 
   const approveRequest = () => {
     const requestBody = { appStatus, appId, decision: 'approved', reqId };
-    setIsDisabled(true);
+    setDisplayStatus('display-none');
+    setStatus('approved');
     axios.put(`${API_URL}/admin-profile`, requestBody).then((response) => {
       console.log(response.data);
     });
@@ -32,16 +31,20 @@ function RequestCard({
 
   const declineRequest = () => {
     const requestBody = { appStatus, appId, decision: 'declined', reqId };
-    setIsDisabled(true);
+    setDisplayStatus('display-none');
+    setStatus('declined');
     axios.put(`${API_URL}/admin-profile`, requestBody).then((response) => {
       console.log(response.data);
     });
   };
+
+  useEffect(() => {}, [appStatus]);
+
   return (
     <Wrapper>
       <section>
         <Card className='card'>
-          <Card.Body className={`card-body ${decision}`}>
+          <Card.Body className={`card-body ${status}`}>
             <Card.Title className='title'>{title}</Card.Title>
             <Card.Subtitle className='price'>
               <span>Date: </span>
@@ -52,19 +55,20 @@ function RequestCard({
               {time}
             </Card.Subtitle>
             <Card.Subtitle className='date'>
-              <span>Client: </span> {client}
+              <span>Client: </span> {client.username}
+            </Card.Subtitle>
+            <Card.Subtitle className='date'>
+              <span>Contact: </span> {client.tel}
             </Card.Subtitle>
             <Button
-              className='approve-btn btn'
+              className={`approve-btn btn ${displayStatus}`}
               onClick={approveRequest}
-              disabled={isDisabled}
             >
               Approve
             </Button>
             <Button
-              className='decline-btn btn'
+              className={`decline-btn btn ${displayStatus}`}
               onClick={declineRequest}
-              disabled={isDisabled}
             >
               Decline
             </Button>
@@ -94,6 +98,12 @@ const Wrapper = styled.div`
   .declined {
     background: #fdaaaa;
     box-shadow: 5px 5px 10px #f97c7c;
+  }
+  .display-block {
+    display: block;
+  }
+  .display-none {
+    display: none;
   }
   .card-img {
     width: 100%;

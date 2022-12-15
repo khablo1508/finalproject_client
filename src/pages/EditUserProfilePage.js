@@ -26,18 +26,21 @@ function EditUserProfilePage() {
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
 
-    const requestBody = { newPassword, newTel };
-
-    axios
-      .put(`${API_URL}/update-profile/${profileId}`, requestBody)
-      .then((response) => {
-        setUser(response.data);
-        navigate(`/user-profile/${profileId}`);
-      })
-      .catch((error) => {
-        const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
-      });
+    if (newPassword === '' && newTel === '') {
+      navigate(`/user-profile/${profileId}`);
+    } else {
+      const requestBody = { newPassword, newTel };
+      axios
+        .put(`${API_URL}/update-profile/${profileId}`, requestBody)
+        .then((response) => {
+          setUser(response.data);
+          navigate(`/user-profile/${profileId}`);
+        })
+        .catch((error) => {
+          const errorDescription = error.response.data.message;
+          setErrorMessage(errorDescription);
+        });
+    }
   };
 
   return (

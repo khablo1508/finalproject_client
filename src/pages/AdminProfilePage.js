@@ -39,7 +39,7 @@ function AdminProfilePage() {
                   time={req.appointment.time}
                   appStatus={req.appointment.status}
                   appId={req.appointment._id}
-                  client={req.appointment.user.username}
+                  client={req.appointment.user}
                 ></RequestCard>
               );
             })}

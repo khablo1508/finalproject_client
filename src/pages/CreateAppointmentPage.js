@@ -54,9 +54,9 @@ function CreateAppointmentPage() {
           <div className='sign-form-container'>
             <h1>Create an appointment request</h1>
             <div className='sign-form'>
-              <h3>Procedure: {chosenProcedure?.procedure.title} </h3>
-              <h3>Duration: {chosenProcedure?.procedure.duration} </h3>
-              <h3>Price: ${chosenProcedure?.procedure.price} </h3>
+              <h3>Procedure: {chosenProcedure.procedure?.title} </h3>
+              <h3>Duration: {chosenProcedure.procedure?.duration} </h3>
+              <h3>Price: ${chosenProcedure.procedure?.price} </h3>
               <form
                 className='input-label-container'
                 onSubmit={requestAppointment}

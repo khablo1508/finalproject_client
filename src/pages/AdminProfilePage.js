@@ -33,13 +33,13 @@ function AdminProfilePage() {
                 <RequestCard
                   key={req._id}
                   reqId={req._id}
-                  title={req.appointment.procedure.title}
+                  title={req.appointment.procedure?.title}
                   decision={req.decision}
-                  date={req.appointment.date}
-                  time={req.appointment.time}
-                  appStatus={req.appointment.status}
-                  appId={req.appointment._id}
-                  client={req.appointment.user}
+                  date={req.appointment?.date}
+                  time={req.appointment?.time}
+                  appStatus={req.appointment?.status}
+                  appId={req.appointment?._id}
+                  client={req.appointment?.user}
                 ></RequestCard>
               );
             })}

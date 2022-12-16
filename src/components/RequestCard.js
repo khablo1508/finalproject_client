@@ -62,10 +62,10 @@ function RequestCard({
               } `}
             >
               <Button className='approve-btn btn' onClick={approveRequest}>
-                Approve
+                <i className='fa-solid fa-check'></i>
               </Button>
               <Button className='decline-btn btn ' onClick={declineRequest}>
-                Decline
+                <i className='fa-solid fa-xmark'></i>
               </Button>
             </div>
           </Card.Body>
@@ -98,12 +98,6 @@ const Wrapper = styled.div`
   .btns-none {
     display: none;
   }
-
-  .card-img {
-    width: 100%;
-    height: 50%;
-    margin-bottom: 15px;
-  }
   .card-body {
     border-radius: 10px;
     margin-bottom: 10px;
@@ -131,13 +125,21 @@ const Wrapper = styled.div`
     text-align: justify;
     font-size: 18px;
   }
-  .card-body .btn {
+  .btns-container {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btns-container .btn {
     background: var(--clr-bourdeaux);
     color: var(--clr-ivory);
     width: 80%;
     cursor: pointer;
+    margin-bottom: 5px;
   }
-  .card-body .approve-btn {
+  .btns-container .approve-btn {
     background: var(--clr-pink);
     color: var(--clr-bourdeaux);
   }

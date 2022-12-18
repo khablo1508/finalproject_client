@@ -26,11 +26,11 @@ function LoginPage() {
     axios
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
-        storeToken(response.data.authToken);
+        storeToken(response?.data.authToken);
         authenticateUser();
       })
       .catch((error) => {
-        const errorDescription = error.response.data.message;
+        const errorDescription = error.response?.data.message;
         setErrorMessage(errorDescription);
       });
   };

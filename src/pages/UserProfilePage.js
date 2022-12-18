@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/auth.context';
 import { ProceduresContext } from '../context/procedures.context';
 import axios from 'axios';
+
+import profilePic from '../assets/profile-pic-test.png';
 
 import AppointmentCard from '../components/AppointmentCard';
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function UserProfilePage() {
-  const { user, logOutUser, isLoading } = useContext(AuthContext);
+  const { user, setUser, logOutUser, isLoading } = useContext(AuthContext);
   const { appointmentsList, setAppointmentsList } =
     useContext(ProceduresContext);
   const navigate = useNavigate();
@@ -18,6 +20,17 @@ function UserProfilePage() {
 
   const handleClick = () => {
     navigate(`/update-profile/${user._id}`);
+  };
+
+  const handleAvatar = (e) => {
+    const uploadData = new FormData();
+    uploadData.append('imageUrl', e.target.files[0]);
+    axios
+      .post(`${API_URL}/user-profile/${profileId}/upload-avatar`, uploadData)
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((error) => console.log('Error while uploading the file: ', error));
   };
 
   useEffect(() => {
@@ -58,6 +71,19 @@ function UserProfilePage() {
           )}
         </div>
         <div className='profile-info'>
+          <div className='avatar-container'>
+            <img
+              // src={user.imageUrl === '' ? profilePic : imageUrl}
+              src={user.imageUrl === '' ? profilePic : user.imageUrl}
+              alt='avatar'
+            />
+            <input
+              type='file'
+              className='edit-pic-btn'
+              onChange={handleAvatar}
+              placeholder='Edit'
+            />
+          </div>
           <div className='text-container'>
             <div className='user-info'>
               <h2>
@@ -118,6 +144,24 @@ const Wrapper = styled.main`
     align-items: center;
     justify-content: space-between;
   }
+  .avatar-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .avatar-container img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+  .avatar-container .edit-pic-btn {
+    border-radius: 0;
+    margin-top: 10px;
+    width: 170px;
+    height: 70px;
+  }
+
   .text-container {
     margin-top: 20px;
     display: flex;

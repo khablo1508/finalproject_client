@@ -11,6 +11,7 @@ function SignupPage() {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [tel, setTel] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ function SignupPage() {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { username, email, password, tel };
+    const requestBody = { username, email, password, tel, imageUrl };
 
     axios
       .post(`${API_URL}/auth/signup`, requestBody)
@@ -41,7 +42,7 @@ function SignupPage() {
         }
       })
       .catch((error) => {
-        const errorDescription = error.response.data.message;
+        const errorDescription = error.response?.data.message;
         setErrorMessage(errorDescription);
       });
   };

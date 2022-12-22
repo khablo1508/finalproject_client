@@ -126,13 +126,13 @@ const Wrapper = styled.main`
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  .cards-container {
-    padding: 20px 30px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 20px;
+    .cards-container {
+      padding: 20px 30px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 20px;
+    }
   }
 
   /* right-side */
@@ -143,63 +143,62 @@ const Wrapper = styled.main`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-  }
-  .avatar-container {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .avatar-container img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-  }
-  .avatar-container .edit-pic-btn {
-    border-radius: 0;
-    margin-top: 10px;
-    width: 170px;
-    height: 70px;
-  }
-
-  .text-container {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 35%;
-  }
-  .text-container .user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .text-container .user-info span {
-    color: var(--clr-bourdeaux);
-    font-size: 30px;
-  }
-  .text-container .user-info .tel-email {
-    margin-top: 10px;
-  }
-  .edit-btn {
-    background: var(--clr-dark);
-    color: #fff;
-    font-size: 20px;
-  }
-  .btns-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: end;
-    width: 100%;
-    height: 30%;
-  }
-  .logout-btn {
-    background: var(--clr-bourdeaux);
-    font-size: 20px;
-    color: var(--clr-ivory);
+    .avatar-container {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+      }
+      .edit-pic-btn {
+        border-radius: 0;
+        margin-top: 10px;
+        width: 170px;
+        height: 70px;
+      }
+    }
+    .text-container {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 35%;
+      .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        span {
+          color: var(--clr-bourdeaux);
+          font-size: 30px;
+        }
+        .tel-email {
+          margin-top: 10px;
+        }
+      }
+      .edit-btn {
+        background: var(--clr-dark);
+        color: #fff;
+        font-size: 20px;
+      }
+    }
+    .btns-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: end;
+      width: 100%;
+      height: 30%;
+      .logout-btn {
+        background: var(--clr-bourdeaux);
+        font-size: 20px;
+        color: var(--clr-ivory);
+      }
+    }
   }
 `;
 

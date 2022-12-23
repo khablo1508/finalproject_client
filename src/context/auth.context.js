@@ -8,6 +8,7 @@ const AuthContext = React.createContext();
 
 function AuthProviderWrapper({ children }) {
   const navigate = useNavigate();
+  const [wrapMenu, setWrapMenu] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -84,6 +85,8 @@ function AuthProviderWrapper({ children }) {
   return (
     <AuthContext.Provider
       value={{
+        wrapMenu,
+        setWrapMenu,
         isAdmin,
         setIsAdmin,
         isLoggedIn,

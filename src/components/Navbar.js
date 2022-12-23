@@ -6,7 +6,8 @@ import { AuthContext } from '../context/auth.context';
 import logo from '../assets/logo-doctor-dasha.png';
 
 function Navbar() {
-  const { isLoggedIn, isAdmin, logOutUser } = useContext(AuthContext);
+  const { isLoggedIn, isAdmin, logOutUser, wrapMenu, setWrapMenu } =
+    useContext(AuthContext);
 
   return (
     <Wrapper>
@@ -47,6 +48,12 @@ function Navbar() {
             </button>
           )}
         </div>
+        <button
+          className='hamburger-menu'
+          onClick={() => setWrapMenu(!wrapMenu)}
+        >
+          <i className='fa-solid fa-bars'></i>
+        </button>
       </div>
     </Wrapper>
   );
@@ -62,41 +69,64 @@ const Wrapper = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .nav-img-container {
-    height: 100%;
-    width: 15%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 30px;
-  }
-  .nav-img-container img {
-    height: 140px;
+    .nav-img-container {
+      height: 100%;
+      width: 15%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 30px;
+      img {
+        height: 140px;
 
-    width: 140px;
-  }
-  .nav-links-container {
-    margin-right: 30px;
-    height: 100%;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-  }
-  .nav-links-container .navlink {
-    width: 20%;
-    height: 35%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    background: #f6f0e7;
-    color: #734938;
-    border-radius: 10px;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
+        width: 140px;
+      }
+    }
+    .nav-links-container {
+      margin-right: 30px;
+      height: 100%;
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      .navlink {
+        width: 20%;
+        height: 35%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        background: #f6f0e7;
+        color: #734938;
+        border-radius: 10px;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
+    .hamburger-menu {
+      display: none;
+    }
+    @media screen and (max-width: 850px) {
+      .nav-links-container {
+        display: none;
+      }
+      .hamburger-menu {
+        width: 20%;
+        height: 35%;
+        margin-right: 20px;
+        display: block;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        background: #f6f0e7;
+        color: #734938;
+        border-radius: 10px;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
   }
 `;
 

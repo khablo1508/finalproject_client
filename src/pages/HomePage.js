@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import imgHomepageBig from '../assets/imgHomepageBig.JPEG';
+import imgHomepageHoriz from '../assets/imgHomepageHoriz.jpg';
 import { Link } from 'react-router-dom';
 
 function HomePage() {
@@ -7,9 +8,12 @@ function HomePage() {
     <Wrapper>
       <section>
         <div className='home-text-container'>
+          <div className='pic-horiz'>
+            <img src={imgHomepageHoriz} alt='doctor dasha' />
+          </div>
           <h1>
             Welcome <br />
-            <span>to my clinic</span> <br />
+            <span>to our clinic</span> <br />
             for aesthetic medicine
           </h1>
           <p>
@@ -26,6 +30,32 @@ function HomePage() {
         </div>
         <div className='home-img-container'>
           <img src={imgHomepageBig} alt='doctor dasha' className='pic-vert' />
+        </div>
+
+        <div className='menu-wrap'>
+          <div className='hamburger'>
+            <div></div>
+          </div>
+          <div className='menu'>
+            <div>
+              <div>
+                <ul>
+                  <li>
+                    <a href='#'>Home</a>
+                  </li>
+                  <li>
+                    <a href='#'>About</a>
+                  </li>
+                  <li>
+                    <a href='#'>Services</a>
+                  </li>
+                  <li>
+                    <a href='#'>Contact</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </Wrapper>
@@ -56,6 +86,9 @@ const Wrapper = styled.main`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    .pic-horiz {
+      display: none;
+    }
     h1 {
       width: 50%;
       max-width: 500px;
@@ -81,22 +114,45 @@ const Wrapper = styled.main`
       color: #f6f0e7;
     }
   }
-  @media screen and (max-width: 420px) {
+  .menu-wrap {
+    display: none;
+  }
+
+  @media screen and (max-width: 950px) {
     .home-text-container {
       width: 100%;
       justify-content: space-between;
       h1 {
-        margin-top: 60px;
+        width: 90%;
       }
       p {
-        display: none;
+        width: 90%;
       }
       .home-page-btn {
-        margin-bottom: 60px;
+        margin-bottom: 50px;
+        width: 250px;
+        height: 60px;
+        font-size: 25px;
       }
     }
     .home-img-container {
       display: none;
+    }
+  }
+  @media screen and (max-width: 380px) {
+    .home-text-container {
+      h1 {
+        margin-top: 50px;
+      }
+      p {
+        display: none;
+      }
+      /* .home-page-btn {
+        margin-bottom: 50px;
+        width: 250px;
+        height: 60px;
+        font-size: 25px;
+      } */
     }
   }
 `;

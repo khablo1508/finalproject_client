@@ -112,6 +112,7 @@ const Wrapper = styled.nav`
         display: none;
       }
       .hamburger-menu {
+        border: 2px solid red;
         width: 20%;
         height: 35%;
         margin-right: 20px;

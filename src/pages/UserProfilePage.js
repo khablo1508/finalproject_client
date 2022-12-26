@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/auth.context';
 import { ProceduresContext } from '../context/procedures.context';
 import axios from 'axios';
@@ -37,7 +37,10 @@ function UserProfilePage() {
     axios
       .get(`${API_URL}/user-profile/${profileId}`)
       .then((foundUser) => {
-        console.log(foundUser.data);
+        setUser(foundUser.data);
+
+        const appointments = foundUser.data.appointments;
+        console.log(appointments);
         setAppointmentsList(foundUser.data.appointments);
       })
 
@@ -48,34 +51,10 @@ function UserProfilePage() {
   return (
     <Wrapper>
       <section className='user-profile'>
-        <div className='apointment-info'>
-          <h1>Your appointments</h1>
-
-          {!isLoading && (
-            <section className='cards-container'>
-              {appointmentsList?.length === 0 && <h2>No appointments yet</h2>}
-
-              {appointmentsList?.map((appointment) => {
-                return (
-                  <AppointmentCard
-                    key={appointment?._id}
-                    title={appointment.procedure?.title}
-                    duration={appointment.procedure?.duration}
-                    price={appointment.procedure?.price}
-                    date={appointment?.date}
-                    time={appointment?.time}
-                    status={appointment?.status}
-                  ></AppointmentCard>
-                );
-              })}
-            </section>
-          )}
-        </div>
         <div className='profile-info'>
           <div className='avatar-container'>
             <img
-              src={user.imageUrl}
-              // src={user.imageUrl === '' ? profilePic : user.imageUrl}
+              src={user.imageUrl === null ? profilePic : user.imageUrl}
               alt='avatar'
             />
             <input
@@ -99,6 +78,11 @@ function UserProfilePage() {
             <button className='btn edit-btn' onClick={handleClick}>
               Edit profile
             </button>
+            <form className='logout-form'>
+              <button className='btn logout-btn' onClick={logOutUser}>
+                Logout
+              </button>
+            </form>
           </div>
           <div className='btns-container'>
             <form>
@@ -107,6 +91,29 @@ function UserProfilePage() {
               </button>
             </form>
           </div>
+        </div>
+        <div className='apointment-info'>
+          <h1>Your appointments</h1>
+
+          {!isLoading && (
+            <section className='cards-container'>
+              {appointmentsList?.length === 0 && <h2>No appointments yet</h2>}
+
+              {appointmentsList?.map((appointment) => {
+                return (
+                  <AppointmentCard
+                    key={appointment?._id}
+                    title={appointment.procedure?.title}
+                    duration={appointment.procedure?.duration}
+                    price={appointment.procedure?.price}
+                    date={appointment?.date}
+                    time={appointment?.time}
+                    status={appointment?.status}
+                  ></AppointmentCard>
+                );
+              })}
+            </section>
+          )}
         </div>
       </section>
     </Wrapper>
@@ -123,7 +130,7 @@ const Wrapper = styled.main`
   .apointment-info {
     width: 70%;
     height: 100%;
-    border-right: 5px dotted var(--clr-bourdeaux);
+    border-left: 5px dotted var(--clr-bourdeaux);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -170,6 +177,9 @@ const Wrapper = styled.main`
       justify-content: space-between;
       width: 100%;
       height: 35%;
+      .logout-form {
+        display: none;
+      }
       .user-info {
         display: flex;
         flex-direction: column;
@@ -195,10 +205,56 @@ const Wrapper = styled.main`
       justify-content: end;
       width: 100%;
       height: 30%;
-      .logout-btn {
-        background: var(--clr-bourdeaux);
-        font-size: 20px;
-        color: var(--clr-ivory);
+    }
+    .logout-btn {
+      background: var(--clr-bourdeaux);
+      font-size: 20px;
+      color: var(--clr-ivory);
+    }
+  }
+  @media (max-width: 800px) {
+    .user-profile {
+      flex-direction: column;
+      .profile-info {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        height: 30%;
+        .avatar-container {
+          height: 100%;
+          margin: 0 0 0 20px;
+          img {
+            margin-top: 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
+        .text-container {
+          padding: 20px 0;
+          height: 100%;
+          width: 40%;
+          margin: 0;
+          justify-content: space-evenly;
+          .logout-form {
+            margin-top: 5px;
+            display: block;
+          }
+        }
+        .btns-container {
+          display: none;
+        }
+      }
+      .apointment-info {
+        width: 100%;
+        border-top: 5px dotted var(--clr-bourdeaux);
+        border-left: none;
+        .cards-container {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 2px;
+        }
       }
     }
   }

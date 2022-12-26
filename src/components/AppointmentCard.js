@@ -40,6 +40,9 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    @media (max-width: 800px) {
+      width: 170px;
+    }
   }
   .pending {
     background: #fff;
@@ -75,15 +78,9 @@ const Wrapper = styled.div`
     height: 20%;
     font-size: 20px;
   }
-  .card-body .description {
-    width: 90%;
-    height: 40%;
-    text-align: justify;
-    font-size: 18px;
-  }
-  .card-body .book-btn {
-    background: var(--clr-bourdeaux);
-    color: var(--clr-ivory);
+  .card-body .status {
+    width: 95%;
+    text-align: center;
   }
 `;
 

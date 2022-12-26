@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
 
-function AppointmentCard({ title, duration, price, date, status }) {
+function AppointmentCard({ title, time, duration, price, date, status }) {
   return (
     <Wrapper>
       <Card className='card'>
@@ -17,6 +17,9 @@ function AppointmentCard({ title, duration, price, date, status }) {
           </Card.Subtitle>
           <Card.Subtitle className='date'>
             <span>Date: </span> {date}
+          </Card.Subtitle>
+          <Card.Subtitle className='date'>
+            <span>Time: </span> {time}
           </Card.Subtitle>
           <Card.Subtitle className='status'>
             <span>Status: </span>{' '}

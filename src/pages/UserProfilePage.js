@@ -37,7 +37,7 @@ function UserProfilePage() {
     axios
       .get(`${API_URL}/user-profile/${profileId}`)
       .then((foundUser) => {
-        console.log(foundUser.data.appointments);
+        console.log(foundUser.data);
         setAppointmentsList(foundUser.data.appointments);
       })
 
@@ -63,6 +63,7 @@ function UserProfilePage() {
                     duration={appointment.procedure?.duration}
                     price={appointment.procedure?.price}
                     date={appointment?.date}
+                    time={appointment?.time}
                     status={appointment?.status}
                   ></AppointmentCard>
                 );
@@ -73,8 +74,8 @@ function UserProfilePage() {
         <div className='profile-info'>
           <div className='avatar-container'>
             <img
-              // src={user.imageUrl === '' ? profilePic : imageUrl}
-              src={user.imageUrl === '' ? profilePic : user.imageUrl}
+              src={user.imageUrl}
+              // src={user.imageUrl === '' ? profilePic : user.imageUrl}
               alt='avatar'
             />
             <input
@@ -152,6 +153,7 @@ const Wrapper = styled.main`
         width: 200px;
         height: 200px;
         border-radius: 50%;
+        object-fit: cover;
       }
       .edit-pic-btn {
         border-radius: 0;

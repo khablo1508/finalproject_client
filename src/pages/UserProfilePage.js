@@ -131,177 +131,164 @@ function UserProfilePage() {
 }
 
 const Wrapper = styled.main`
-  @media screen and (min-width: 501px) {
-  }
-  /* left side */
-  .appointment-info {
-    width: 70%;
-    height: 100%;
-    border-left: 5px dotted var(--clr-bourdeaux);
+  .user-profile {
+    width: 100vw;
+    height: 85vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    .cards-container {
-      padding: 20px 30px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  }
 
-  /* right-side */
-  .profile-info {
-    flex-direction: column;
-    width: 30%;
-    height: 98%;
-    align-items: center;
-    .avatar-container {
-      margin-top: 20px;
-      img {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-      .edit-pic-btn {
-        border-radius: 0;
-        margin-top: 10px;
-        width: 170px;
-        height: 70px;
-      }
-    }
-    .text-container {
-      margin-top: 20px;
+    /* upper side */
+    .profile-info {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: row;
       justify-content: space-between;
       width: 100%;
-      height: 35%;
-      .resp-btns {
-        display: none;
-      }
-      .user-info {
+      height: 30%;
+      .avatar-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        span {
-          color: var(--clr-bourdeaux);
-          font-size: 30px;
+        height: 100%;
+        width: 40%;
+        margin: 0 0 0 20px;
+        img {
+          margin-top: 20px;
+          width: 65%;
+          height: 65%;
+          border-radius: 50%;
+          object-fit: cover;
         }
-        .tel-email {
+        .edit-pic-btn {
+          border-radius: 0;
           margin-top: 10px;
+          width: 170px;
+          height: 70px;
         }
       }
-      .edit-btn {
-        background: var(--clr-dark);
-        color: #fff;
-        font-size: 20px;
+      .text-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        padding: 10px 0;
+        height: 100%;
+        width: 40%;
+        margin: 0;
+        .user-info {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 0;
+          width: 100%;
+          height: 100%;
+          span {
+            color: var(--clr-bourdeaux);
+            font-size: 30px;
+          }
+          .tel-email {
+            margin: 0;
+            font-size: 10px;
+          }
+        }
+        .edit-btn {
+          display: none;
+        }
+        .resp-btns {
+          display: flex;
+          justify-content: space-around;
+          width: 60%;
+          height: 30%;
+
+          .resp-btn-edit {
+            width: 45%;
+            background: var(--clr-dark);
+            height: 100%;
+            color: #fff;
+          }
+          .logout-form {
+            width: 45%;
+          }
+          .resp-btn-logout {
+            width: 100%;
+            height: 100%;
+            background: var(--clr-bourdeaux);
+            color: #fff;
+          }
+        }
+      }
+      .btns-container {
+        display: none;
       }
     }
-    .btns-container {
+    .appointment-info {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: end;
       width: 100%;
-      height: 30%;
-    }
-    .logout-btn {
-      background: var(--clr-bourdeaux);
-      font-size: 20px;
-      color: var(--clr-ivory);
-    }
-  }
-  @media screen and (max-width: 500px) {
-    .user-profile {
-      width: 100vw;
-      height: 85vh;
-      display: flex;
-      flex-direction: column;
-
-      /* upper side */
-      .profile-info {
+      border-top: 5px dotted var(--clr-bourdeaux);
+      .cards-container {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-        height: 30%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    @media screen and (min-width: 501px) {
+      /* left side */
+      .appointment-info {
+        width: 70%;
+        height: 100%;
+        border-left: 5px dotted var(--clr-bourdeaux);
+        .cards-container {
+          padding: 20px 30px;
+          width: 100%;
+        }
+      }
+
+      /* right-side */
+      .profile-info {
+        flex-direction: column;
+        width: 30%;
+        height: 98%;
+        align-items: center;
         .avatar-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          height: 100%;
-          margin: 0 0 0 20px;
+          margin-top: 20px;
           img {
-            margin-top: 20px;
-            width: 65%;
-            height: 65%;
-            border-radius: 50%;
-            object-fit: cover;
+            width: 200px;
+            height: 200px;
           }
         }
         .text-container {
-          font-size: 12px;
-          padding: 10px 0;
-          height: 90%;
-          width: 40%;
-          margin: 0;
-          /* justify-content: space-between; */
+          margin-top: 20px;
+          width: 100%;
+          height: 35%;
           .user-info {
-            margin: 0;
-            width: 100%;
-            height: 100%;
             .tel-email {
-              margin: 0;
-              font-size: 10px;
+              margin-top: 10px;
             }
           }
           .edit-btn {
-            display: none;
+            background: var(--clr-dark);
+            color: #fff;
+            font-size: 20px;
           }
           .resp-btns {
-            /* margin-top: 10px; */
-            display: flex;
-            justify-content: space-around;
-            width: 60%;
-            height: 30%;
-
-            .resp-btn-edit {
-              width: 45%;
-              background: var(--clr-dark);
-              height: 100%;
-              color: #fff;
-            }
-            .logout-form {
-              width: 45%;
-            }
-            .resp-btn-logout {
-              width: 100%;
-              height: 100%;
-              background: var(--clr-bourdeaux);
-              color: #fff;
-            }
+            /* display: none; */
           }
         }
         .btns-container {
-          display: none;
-        }
-      }
-      .apointment-info {
-        width: 100%;
-        border-top: 5px dotted var(--clr-bourdeaux);
-        border-left: none;
-        .cards-container {
           display: flex;
           flex-direction: column;
-          justify-content: center;
           align-items: center;
-          .appcard {
-            width: 100%;
-          }
+          justify-content: end;
+          width: 100%;
+          height: 30%;
+        }
+        .logout-btn {
+          background: var(--clr-bourdeaux);
+          font-size: 20px;
+          color: var(--clr-ivory);
         }
       }
     }

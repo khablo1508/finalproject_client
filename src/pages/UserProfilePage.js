@@ -39,9 +39,11 @@ function UserProfilePage() {
       .then((foundUser) => {
         setUser(foundUser.data);
 
-        const appointments = foundUser.data.appointments;
-        console.log(appointments);
-        setAppointmentsList(foundUser.data.appointments);
+        const appointments = foundUser.data.appointments.sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        });
+
+        setAppointmentsList(appointments);
       })
 
       .catch((err) => console.log(err));
@@ -75,15 +77,22 @@ function UserProfilePage() {
               </div>
             </div>
 
+            <div className='resp-btns'>
+              <button className='resp-btn-edit btn' onClick={handleClick}>
+                Edit profile
+              </button>
+              <form className='logout-form resp-btn'>
+                <button className='resp-btn-logout btn' onClick={logOutUser}>
+                  Logout
+                </button>
+              </form>
+            </div>
+
             <button className='btn edit-btn' onClick={handleClick}>
               Edit profile
             </button>
-            <form className='logout-form'>
-              <button className='btn logout-btn' onClick={logOutUser}>
-                Logout
-              </button>
-            </form>
           </div>
+
           <div className='btns-container'>
             <form>
               <button className='btn logout-btn' onClick={logOutUser}>
@@ -92,7 +101,7 @@ function UserProfilePage() {
             </form>
           </div>
         </div>
-        <div className='apointment-info'>
+        <div className='appointment-info'>
           <h1>Your appointments</h1>
 
           {!isLoading && (
@@ -102,6 +111,7 @@ function UserProfilePage() {
               {appointmentsList?.map((appointment) => {
                 return (
                   <AppointmentCard
+                    className='appcard'
                     key={appointment?._id}
                     title={appointment.procedure?.title}
                     duration={appointment.procedure?.duration}
@@ -121,13 +131,10 @@ function UserProfilePage() {
 }
 
 const Wrapper = styled.main`
-  .user-profile {
-    width: 100vw;
-    height: 85vh;
-    display: flex;
+  @media screen and (min-width: 501px) {
   }
   /* left side */
-  .apointment-info {
+  .appointment-info {
     width: 70%;
     height: 100%;
     border-left: 5px dotted var(--clr-bourdeaux);
@@ -137,25 +144,21 @@ const Wrapper = styled.main`
     .cards-container {
       padding: 20px 30px;
       width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
 
   /* right-side */
   .profile-info {
+    flex-direction: column;
     width: 30%;
     height: 98%;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     .avatar-container {
       margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       img {
         width: 200px;
         height: 200px;
@@ -177,7 +180,7 @@ const Wrapper = styled.main`
       justify-content: space-between;
       width: 100%;
       height: 35%;
-      .logout-form {
+      .resp-btns {
         display: none;
       }
       .user-info {
@@ -212,34 +215,75 @@ const Wrapper = styled.main`
       color: var(--clr-ivory);
     }
   }
-  @media (max-width: 800px) {
+  @media screen and (max-width: 500px) {
     .user-profile {
+      width: 100vw;
+      height: 85vh;
+      display: flex;
       flex-direction: column;
+
+      /* upper side */
       .profile-info {
+        display: flex;
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
         height: 30%;
         .avatar-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           height: 100%;
           margin: 0 0 0 20px;
           img {
             margin-top: 20px;
-            width: 120px;
-            height: 120px;
+            width: 65%;
+            height: 65%;
             border-radius: 50%;
             object-fit: cover;
           }
         }
         .text-container {
-          padding: 20px 0;
-          height: 100%;
+          font-size: 12px;
+          padding: 10px 0;
+          height: 90%;
           width: 40%;
           margin: 0;
-          justify-content: space-evenly;
-          .logout-form {
-            margin-top: 5px;
-            display: block;
+          /* justify-content: space-between; */
+          .user-info {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            .tel-email {
+              margin: 0;
+              font-size: 10px;
+            }
+          }
+          .edit-btn {
+            display: none;
+          }
+          .resp-btns {
+            /* margin-top: 10px; */
+            display: flex;
+            justify-content: space-around;
+            width: 60%;
+            height: 30%;
+
+            .resp-btn-edit {
+              width: 45%;
+              background: var(--clr-dark);
+              height: 100%;
+              color: #fff;
+            }
+            .logout-form {
+              width: 45%;
+            }
+            .resp-btn-logout {
+              width: 100%;
+              height: 100%;
+              background: var(--clr-bourdeaux);
+              color: #fff;
+            }
           }
         }
         .btns-container {
@@ -251,9 +295,13 @@ const Wrapper = styled.main`
         border-top: 5px dotted var(--clr-bourdeaux);
         border-left: none;
         .cards-container {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 2px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .appcard {
+            width: 100%;
+          }
         }
       }
     }

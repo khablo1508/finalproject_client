@@ -35,14 +35,11 @@ function AppointmentCard({ title, time, duration, price, date, status }) {
 
 const Wrapper = styled.div`
   .card {
-    height: 250px;
-    width: 200px;
+    width: 250px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    @media (max-width: 800px) {
-      width: 170px;
-    }
   }
   .pending {
     background: #fff;

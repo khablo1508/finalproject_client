@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth.context';
 import imgHomepageBig from '../assets/imgHomepageBig.JPEG';
 import imgHomepageHoriz from '../assets/imgHomepageHoriz.jpg';
-import { Link } from 'react-router-dom';
 
 function HomePage() {
+  const { isAdmin } = useContext(AuthContext);
   return (
     <Wrapper>
       <section>
@@ -41,17 +44,29 @@ function HomePage() {
               <div>
                 <ul>
                   <li>
-                    <a href='#'>Home</a>
+                    <Link to='/services'>Services</Link>
+                  </li>
+
+                  <li>
+                    <Link to='/signup'>Sign up</Link>
                   </li>
                   <li>
-                    <a href='#'>About</a>
+                    <Link to='/login'>Log in</Link>
                   </li>
-                  <li>
-                    <a href='#'>Services</a>
-                  </li>
-                  <li>
-                    <a href='#'>Contact</a>
-                  </li>
+                  {isAdmin && (
+                    <li>
+                      <Link className='navlink' to='/admin-profile'>
+                        <i className='fa-solid fa-unlock-keyhole'></i>
+                      </Link>
+                    </li>
+                  )}
+                  {!isAdmin && (
+                    <li>
+                      <Link className='navlink' to='/user-profile/:profileId'>
+                        <i className='fa-solid fa-person-dress'></i>
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>
@@ -67,94 +82,91 @@ const Wrapper = styled.main`
     width: 100vw;
     height: 85vh;
     display: flex;
-    justify-content: space-between;
-  }
-  .home-img-container {
-    height: 100%;
-    width: 30%;
-    display: flex;
-    align-items: flex-end;
-    .pic-vert {
-      height: 99%;
-      width: 100%;
-    }
-  }
-  .home-text-container {
-    height: 100%;
-    width: 65%;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    .pic-horiz {
-      display: none;
-    }
-    h1 {
-      width: 50%;
-      max-width: 500px;
-      height: 30%;
-      max-height: 300px;
-      text-align: center;
-      font-size: 50px;
-    }
-    span {
-      color: #821d30;
-    }
-    p {
-      text-align: center;
-      width: 50%;
-      max-width: 700px;
-      height: 40%;
-      font-size: 20px;
-      line-height: 30px;
-      font-family: 'Libre Caslon Text', serif;
-    }
-    .home-page-btn {
-      background-color: #821d30;
-      color: #f6f0e7;
-    }
-  }
-  .menu-wrap {
-    display: none;
-  }
-
-  @media screen and (max-width: 950px) {
     .home-text-container {
+      height: 100%;
       width: 100%;
-      justify-content: space-between;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .pic-horiz {
+        display: none;
+      }
       h1 {
         width: 90%;
-      }
-      p {
-        width: 90%;
-      }
-      .home-page-btn {
-        margin-bottom: 50px;
-        width: 250px;
-        height: 60px;
-        font-size: 25px;
-      }
-    }
-    .home-img-container {
-      display: none;
-    }
-  }
-  @media screen and (max-width: 380px) {
-    .home-text-container {
-      h1 {
+        min-width: 168px;
+        max-width: 600px;
+        height: 40%;
+        max-height: 300px;
+        text-align: center;
+        font-size: 50px;
         margin-top: 50px;
+      }
+      span {
+        color: #821d30;
       }
       p {
         display: none;
       }
-      /* .home-page-btn {
+      .home-page-btn {
         margin-bottom: 50px;
-        width: 250px;
+        margin-top: 30px;
+        width: 60%;
+        min-width: 150px;
         height: 60px;
         font-size: 25px;
-      } */
+        background-color: #821d30;
+        color: #f6f0e7;
+      }
+    }
+    .menu-wrap {
+      display: none;
+    }
+    .home-img-container {
+      display: none;
+    }
+    @media screen and (min-width: 501px) and (max-width: 949px) {
+      .home-text-container {
+        width: 100%;
+        justify-content: space-between;
+        .pic-horiz {
+          display: block;
+        }
+        h1 {
+          width: 90%;
+        }
+        p {
+          display: block;
+          width: 90%;
+        }
+      }
     }
   }
+  /* @media screen and (min-width: 951px) {
+    .home-text-container {
+      p {
+        display: block;
+        text-align: center;
+        width: 50%;
+        max-width: 700px;
+        height: 40%;
+        font-size: 20px;
+        line-height: 30px;
+        font-family: 'Libre Caslon Text', serif;
+      }
+    }
+    .home-img-container {
+      height: 100%;
+      width: 30%;
+      display: flex;
+      align-items: flex-end;
+      .pic-vert {
+        height: 99%;
+        width: 100%;
+      }
+    }
+  } */
 `;
 
 export default HomePage;

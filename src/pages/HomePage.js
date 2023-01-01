@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import imgHomepageBig from '../assets/imgHomepageBig.JPEG';
-import imgHomepageHoriz from '../assets/imgHomepageHoriz.jpg';
 
 function HomePage() {
   const { isAdmin } = useContext(AuthContext);
@@ -11,9 +10,6 @@ function HomePage() {
     <Wrapper>
       <section>
         <div className='home-text-container'>
-          {/* <div className='pic-horiz'>
-            <img src={imgHomepageHoriz} alt='doctor dasha' />
-          </div> */}
           <h1>
             Welcome <br />
             <span>to our clinic</span> <br />
@@ -126,10 +122,10 @@ const Wrapper = styled.main`
     .home-img-container {
       display: none;
     }
-    @media screen and (min-width: 501px) and (max-width: 949px) {
+    @media screen and (min-width: 501px) {
       .home-text-container {
         width: 100%;
-        justify-content: space-between;
+        justify-content: center;
         /* .pic-horiz {
           display: block;
   
@@ -152,37 +148,43 @@ const Wrapper = styled.main`
           font-size: 20px;
           line-height: 30px;
           text-align: center;
+          font-family: 'Libre Caslon Text', serif;
         }
         .home-page-btn {
           margin-bottom: 20px;
         }
       }
     }
+    @media screen and (min-width: 951px) {
+      .home-text-container {
+        h1 {
+          margin: 0;
+          font-size: 50px;
+        }
+        p {
+          margin: 0;
+          width: 70%;
+          max-width: 800px;
+          height: 30%;
+          max-height: 150px;
+          font-size: 20px;
+        }
+        .home-page-btn {
+          margin-top: 40px;
+        }
+      }
+      .home-img-container {
+        height: 100%;
+        width: 40%;
+        display: flex;
+        align-items: flex-end;
+        .pic-vert {
+          height: 99%;
+          width: 100%;
+        }
+      }
+    }
   }
-  /* @media screen and (min-width: 951px) {
-    .home-text-container {
-      p {
-        display: block;
-        text-align: center;
-        width: 50%;
-        max-width: 700px;
-        height: 40%;
-        font-size: 20px;
-        line-height: 30px;
-        font-family: 'Libre Caslon Text', serif;
-      }
-    }
-    .home-img-container {
-      height: 100%;
-      width: 30%;
-      display: flex;
-      align-items: flex-end;
-      .pic-vert {
-        height: 99%;
-        width: 100%;
-      }
-    }
-  } */
 `;
 
 export default HomePage;

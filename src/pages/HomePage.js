@@ -11,9 +11,9 @@ function HomePage() {
     <Wrapper>
       <section>
         <div className='home-text-container'>
-          <div className='pic-horiz'>
+          {/* <div className='pic-horiz'>
             <img src={imgHomepageHoriz} alt='doctor dasha' />
-          </div>
+          </div> */}
           <h1>
             Welcome <br />
             <span>to our clinic</span> <br />
@@ -128,17 +128,34 @@ const Wrapper = styled.main`
     }
     @media screen and (min-width: 501px) and (max-width: 949px) {
       .home-text-container {
+        border: 2px solid red;
         width: 100%;
         justify-content: space-between;
-        .pic-horiz {
+        /* .pic-horiz {
           display: block;
-        }
+  
+          width: 100%;
+          height: 55%;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+          }
+        } */
         h1 {
+          margin-top: 20px;
           width: 90%;
+          font-size: 60px;
         }
         p {
           display: block;
-          width: 90%;
+          width: 80%;
+          font-size: 20px;
+          line-height: 30px;
+          text-align: center;
+        }
+        .home-page-btn {
+          margin-bottom: 20px;
         }
       }
     }

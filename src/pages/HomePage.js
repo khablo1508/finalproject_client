@@ -128,7 +128,6 @@ const Wrapper = styled.main`
     }
     @media screen and (min-width: 501px) and (max-width: 949px) {
       .home-text-container {
-        border: 2px solid red;
         width: 100%;
         justify-content: space-between;
         /* .pic-horiz {

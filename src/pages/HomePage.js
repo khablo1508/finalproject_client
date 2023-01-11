@@ -3,71 +3,45 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import imgHomepageBig from '../assets/imgHomepageBig.JPEG';
+import HamburgerMenu from '../components/HamburgerMenu';
 
 function HomePage() {
-  const { isAdmin } = useContext(AuthContext);
+  const { wrapMenu } = useContext(AuthContext);
   return (
     <Wrapper>
-      <section>
-        <div className='home-text-container'>
-          <h1>
-            Welcome <br />
-            <span>to our clinic</span> <br />
-            for aesthetic medicine
-          </h1>
-          <p>
-            <i>
-              We, the doctors and cosmetologists of Doctor Dasha Clinic believe
-              that beauty will save the world, you just need to contact us! A
-              wide range of services, quality cosmetics and pleasant prices -
-              become a real superhero with our first-class specialists
-            </i>
-          </p>
-          <Link className='btn home-page-btn' to='/services'>
-            To our serices
-          </Link>
-        </div>
-        <div className='home-img-container'>
-          <img src={imgHomepageBig} alt='doctor dasha' className='pic-vert' />
-        </div>
-
-        <div className='menu-wrap'>
-          <div className='hamburger'>
-            <div></div>
-          </div>
-          <div className='menu'>
-            <div>
-              <div>
-                <ul>
-                  <li>
-                    <Link to='/services'>Services</Link>
-                  </li>
-
-                  <li>
-                    <Link to='/signup'>Sign up</Link>
-                  </li>
-                  <li>
-                    <Link to='/login'>Log in</Link>
-                  </li>
-                  {isAdmin && (
-                    <li>
-                      <Link className='navlink' to='/admin-profile'>
-                        <i className='fa-solid fa-unlock-keyhole'></i>
-                      </Link>
-                    </li>
-                  )}
-                  {!isAdmin && (
-                    <li>
-                      <Link className='navlink' to='/user-profile/:profileId'>
-                        <i className='fa-solid fa-person-dress'></i>
-                      </Link>
-                    </li>
-                  )}
-                </ul>
-              </div>
+      <section className={wrapMenu ? 'wrap' : ''}>
+        {wrapMenu ? (
+          <HamburgerMenu />
+        ) : (
+          <>
+            <div className='home-text-container'>
+              <h1>
+                Welcome <br />
+                <span>to our clinic</span> <br />
+                for aesthetic medicine
+              </h1>
+              <p>
+                <i>
+                  We, the doctors and cosmetologists of Doctor Dasha Clinic
+                  believe that beauty will save the world, you just need to
+                  contact us! A wide range of services, quality cosmetics and
+                  pleasant prices - become a real superhero with our first-class
+                  specialists
+                </i>
+              </p>
+              <Link className='btn home-page-btn' to='/services'>
+                To our serices
+              </Link>
             </div>
-          </div>
-        </div>
+            <div className='home-img-container'>
+              <img
+                src={imgHomepageBig}
+                alt='doctor dasha'
+                className='pic-vert'
+              />
+            </div>
+          </>
+        )}
       </section>
     </Wrapper>
   );
@@ -78,7 +52,7 @@ const Wrapper = styled.main`
     width: 100vw;
     height: 85vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     .home-text-container {
       height: 100%;
       width: 100%;
@@ -116,27 +90,12 @@ const Wrapper = styled.main`
         color: #f6f0e7;
       }
     }
-    .menu-wrap {
-      display: none;
-    }
+
     .home-img-container {
       display: none;
     }
     @media screen and (min-width: 501px) {
       .home-text-container {
-        width: 100%;
-        justify-content: center;
-        /* .pic-horiz {
-          display: block;
-  
-          width: 100%;
-          height: 55%;
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: fill;
-          }
-        } */
         h1 {
           margin-top: 20px;
           width: 90%;
@@ -157,6 +116,7 @@ const Wrapper = styled.main`
     }
     @media screen and (min-width: 951px) {
       .home-text-container {
+        width: 80%;
         h1 {
           margin: 0;
           font-size: 50px;
@@ -175,7 +135,8 @@ const Wrapper = styled.main`
       }
       .home-img-container {
         height: 100%;
-        width: 40%;
+        width: 50%;
+        max-width: 450px;
         display: flex;
         align-items: flex-end;
         .pic-vert {

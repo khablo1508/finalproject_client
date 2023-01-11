@@ -11,7 +11,7 @@ function Navbar() {
 
   return (
     <Wrapper>
-      <div className={wrapMenu ? 'wrap-nav' : ''}>
+      <div className={wrapMenu ? 'wrap' : ''}>
         <div className='nav'>
           <NavLink className='nav-img-container' to='/'>
             <img src={logo} alt='logo' />
@@ -64,7 +64,7 @@ function Navbar() {
 }
 
 const Wrapper = styled.nav`
-  .wrap-nav {
+  .wrap {
     opacity: 0.5;
     background-color: linear-gradient(
       rgba(247, 217, 205, 0.5),

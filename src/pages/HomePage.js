@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/auth.context';
 import imgHomepageBig from '../assets/imgHomepageBig.JPEG';
 import HamburgerMenu from '../components/HamburgerMenu';
 
 function HomePage() {
-  const { wrapMenu } = useContext(AuthContext);
+  const { wrapMenu, setWrapMenu } = useContext(AuthContext);
+
+  useEffect(() => {
+    setWrapMenu(false);
+  }, []);
+
   return (
     <Wrapper>
       <section className={wrapMenu ? 'wrap' : ''}>

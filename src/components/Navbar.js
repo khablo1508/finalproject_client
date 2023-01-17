@@ -11,7 +11,7 @@ function Navbar() {
 
   return (
     <Wrapper>
-      <div className={wrapMenu ? 'wrap' : ''}>
+      <div className={wrapMenu ? 'wrap-nav' : ''}>
         <div className='nav'>
           <NavLink className='nav-img-container' to='/'>
             <img src={logo} alt='logo' />

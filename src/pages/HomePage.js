@@ -65,9 +65,6 @@ const Wrapper = styled.main`
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      .pic-horiz {
-        display: none;
-      }
       h1 {
         width: 90%;
         min-width: 168px;

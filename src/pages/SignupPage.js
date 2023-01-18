@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
+import HamburgerMenu from '../components/HamburgerMenu';
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -16,8 +17,14 @@ function SignupPage() {
 
   const navigate = useNavigate();
 
-  const { setUser, setIsLoggedIn, setIsAdmin, storeToken } =
-    useContext(AuthContext);
+  const {
+    setUser,
+    setIsLoggedIn,
+    setIsAdmin,
+    storeToken,
+    wrapMenu,
+    setWrapMenu,
+  } = useContext(AuthContext);
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
@@ -47,65 +54,74 @@ function SignupPage() {
       });
   };
 
+  useEffect(() => {
+    setWrapMenu(false);
+  }, []);
+
   return (
-    <section className='sign-form-section'>
-      <h1>Sign Up</h1>
+    <section className={wrapMenu ? 'wrap' : 'sign-form-section'}>
+      {wrapMenu ? (
+        <HamburgerMenu />
+      ) : (
+        <>
+          <h1>Sign Up</h1>
+          <div className='sign-form-container'>
+            <form className='sign-form' onSubmit={handleSignupSubmit}>
+              <div className='input-label-container'>
+                <label>Email:</label>
+                <input
+                  type='email'
+                  name='email'
+                  value={email}
+                  onChange={handleEmail}
+                />
+              </div>
+              <div className='input-label-container'>
+                <label>Password:</label>
+                <input
+                  type='password'
+                  name='password'
+                  value={password}
+                  onChange={handlePassword}
+                />
+              </div>
+              <div className='input-label-container'>
+                <label>Full name:</label>
+                <input
+                  type='text'
+                  name='username'
+                  value={username}
+                  onChange={handleUsername}
+                />
+              </div>
+              <div className='input-label-container'>
+                <label>Phone number:</label>
+                <input
+                  type='tel'
+                  name='phone'
+                  pattern='[0-9]{3}-[0-9]{2}-[0-9]{3}'
+                  value={tel}
+                  onChange={handleTel}
+                />
+                <small>Format: 123-45-678</small>
+              </div>
 
-      <div className='sign-form-container'>
-        <form className='sign-form' onSubmit={handleSignupSubmit}>
-          <div className='input-label-container'>
-            <label>Email:</label>
-            <input
-              type='email'
-              name='email'
-              value={email}
-              onChange={handleEmail}
-            />
-          </div>
-          <div className='input-label-container'>
-            <label>Password:</label>
-            <input
-              type='password'
-              name='password'
-              value={password}
-              onChange={handlePassword}
-            />
-          </div>
-          <div className='input-label-container'>
-            <label>Full name:</label>
-            <input
-              type='text'
-              name='username'
-              value={username}
-              onChange={handleUsername}
-            />
-          </div>
-          <div className='input-label-container'>
-            <label>Phone number:</label>
-            <input
-              type='tel'
-              name='phone'
-              pattern='[0-9]{3}-[0-9]{2}-[0-9]{3}'
-              value={tel}
-              onChange={handleTel}
-            />
-            <small>Format: 123-45-678</small>
+              <button className='btn sign-btn' type='submit'>
+                Sign Up
+              </button>
+            </form>
           </div>
 
-          <button className='btn sign-btn' type='submit'>
-            Sign Up
-          </button>
-        </form>
-      </div>
+          {errorMessage && <p className='error-message'>{errorMessage}</p>}
 
-      {errorMessage && <p className='error-message'>{errorMessage}</p>}
-
-      <div className='sign-suggestion'>
-        <p>Already have account?</p>
-        <Link className='sign-link' to={'/login'}>
-          Login
-        </Link>
-      </div>
+          <div className='sign-suggestion'>
+            <p>Already have account?</p>
+            <Link className='sign-link' to={'/login'}>
+              Login
+            </Link>
+          </div>
+        </>
+      )}
     </section>
   );
 }

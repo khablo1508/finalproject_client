@@ -15,6 +15,7 @@ function ServicesPage() {
 
   useEffect(() => {
     setWrapMenu(false);
+    console.log(wrapMenu);
     axios
       .get(`${API_URL}/services`)
       .then((proceduresFromDB) => {

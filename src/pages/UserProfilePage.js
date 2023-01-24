@@ -8,11 +8,13 @@ import axios from 'axios';
 import profilePic from '../assets/profile-pic-test.png';
 
 import AppointmentCard from '../components/AppointmentCard';
+import HamburgerMenu from '../components/HamburgerMenu';
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function UserProfilePage() {
-  const { user, setUser, logOutUser, isLoading } = useContext(AuthContext);
+  const { user, setUser, logOutUser, isLoading, wrapMenu, setWrapMenu } =
+    useContext(AuthContext);
   const { appointmentsList, setAppointmentsList } =
     useContext(ProceduresContext);
   const navigate = useNavigate();
@@ -34,6 +36,7 @@ function UserProfilePage() {
   };
 
   useEffect(() => {
+    setWrapMenu(false);
     axios
       .get(`${API_URL}/user-profile/${profileId}`)
       .then((foundUser) => {
@@ -52,79 +55,90 @@ function UserProfilePage() {
 
   return (
     <Wrapper>
-      <section className='user-profile'>
-        <div className='profile-info'>
-          <div className='avatar-container'>
-            <img
-              src={user.imageUrl === null ? profilePic : user.imageUrl}
-              alt='avatar'
-            />
-            <input
-              type='file'
-              className='edit-pic-btn'
-              onChange={handleAvatar}
-              placeholder='Edit'
-            />
-          </div>
-          <div className='text-container'>
-            <div className='user-info'>
-              <h2>
-                <span>{user.username}</span>
-              </h2>
-              <div className='tel-email'>
-                <h2>Email: {user.email}</h2>
-                <h2>Tel: {user.tel}</h2>
+      <section className={wrapMenu ? 'wrap' : 'user-profile'}>
+        {wrapMenu ? (
+          <HamburgerMenu />
+        ) : (
+          <>
+            <div className='profile-info'>
+              <div className='avatar-container'>
+                <img
+                  src={user.imageUrl === null ? profilePic : user.imageUrl}
+                  alt='avatar'
+                />
+                <input
+                  type='file'
+                  className='edit-pic-btn'
+                  onChange={handleAvatar}
+                  placeholder='Edit'
+                />
+              </div>
+              <div className='text-container'>
+                <div className='user-info'>
+                  <h2>
+                    <span>{user.username}</span>
+                  </h2>
+                  <div className='tel-email'>
+                    <h2>Email: {user.email}</h2>
+                    <h2>Tel: {user.tel}</h2>
+                  </div>
+                </div>
+
+                <div className='resp-btns'>
+                  <button className='resp-btn-edit btn' onClick={handleClick}>
+                    Edit profile
+                  </button>
+                  <form className='logout-form resp-btn'>
+                    <button
+                      className='resp-btn-logout btn'
+                      onClick={logOutUser}
+                    >
+                      Logout
+                    </button>
+                  </form>
+                </div>
+
+                <button className='btn edit-btn' onClick={handleClick}>
+                  Edit profile
+                </button>
+              </div>
+
+              <div className='btns-container'>
+                <form>
+                  <button className='btn logout-btn' onClick={logOutUser}>
+                    Logout
+                  </button>
+                </form>
               </div>
             </div>
+            <div className='appointment-info'>
+              <h1>Your appointments</h1>
 
-            <div className='resp-btns'>
-              <button className='resp-btn-edit btn' onClick={handleClick}>
-                Edit profile
-              </button>
-              <form className='logout-form resp-btn'>
-                <button className='resp-btn-logout btn' onClick={logOutUser}>
-                  Logout
-                </button>
-              </form>
+              {!isLoading && (
+                <section className='cards-container'>
+                  {appointmentsList?.length === 0 && (
+                    <h2>No appointments yet</h2>
+                  )}
+
+                  {appointmentsList?.map((appointment) => {
+                    return (
+                      <AppointmentCard
+                        className='appcard'
+                        key={appointment?._id}
+                        title={appointment.procedure?.title}
+                        duration={appointment.procedure?.duration}
+                        price={appointment.procedure?.price}
+                        date={appointment?.date}
+                        time={appointment?.time}
+                        status={appointment?.status}
+                      ></AppointmentCard>
+                    );
+                  })}
+                </section>
+              )}
             </div>
-
-            <button className='btn edit-btn' onClick={handleClick}>
-              Edit profile
-            </button>
-          </div>
-
-          <div className='btns-container'>
-            <form>
-              <button className='btn logout-btn' onClick={logOutUser}>
-                Logout
-              </button>
-            </form>
-          </div>
-        </div>
-        <div className='appointment-info'>
-          <h1>Your appointments</h1>
-
-          {!isLoading && (
-            <section className='cards-container'>
-              {appointmentsList?.length === 0 && <h2>No appointments yet</h2>}
-
-              {appointmentsList?.map((appointment) => {
-                return (
-                  <AppointmentCard
-                    className='appcard'
-                    key={appointment?._id}
-                    title={appointment.procedure?.title}
-                    duration={appointment.procedure?.duration}
-                    price={appointment.procedure?.price}
-                    date={appointment?.date}
-                    time={appointment?.time}
-                    status={appointment?.status}
-                  ></AppointmentCard>
-                );
-              })}
-            </section>
-          )}
-        </div>
+          </>
+        )}
       </section>
     </Wrapper>
   );
@@ -234,7 +248,7 @@ const Wrapper = styled.main`
         align-items: center;
       }
     }
-    @media screen and (min-width: 501px) {
+    @media screen and (min-width: 601px) {
       /* left side */
       .appointment-info {
         width: 70%;

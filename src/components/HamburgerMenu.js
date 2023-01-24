@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 
 function HamburgerMenu() {
-  const { isAdmin } = useContext(AuthContext);
+  const { isAdmin, isLoggedIn } = useContext(AuthContext);
 
   return (
     <div className='menu-wrap'>
@@ -11,14 +11,17 @@ function HamburgerMenu() {
         <Link className='navlink' to='/services'>
           Services
         </Link>
+        {!isLoggedIn && (
+          <>
+            <Link className='navlink' to='/signup'>
+              Sign up
+            </Link>
 
-        <Link className='navlink' to='/signup'>
-          Sign up
-        </Link>
-
-        <Link className='navlink' to='/login'>
-          Log in
-        </Link>
+            <Link className='navlink' to='/login'>
+              Log in
+            </Link>
+          </>
+        )}
 
         {isAdmin && (
           <Link className='navlink' to='/admin-profile'>

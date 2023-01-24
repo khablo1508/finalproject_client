@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/auth.context';
 import HamburgerMenu from '../components/HamburgerMenu';
@@ -11,7 +11,7 @@ function EditUserProfilePage() {
   const [newTel, setNewTel] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  const { user, setUser, wrapMenu } = useContext(AuthContext);
+  const { user, setUser, wrapMenu, setWrapMenu } = useContext(AuthContext);
 
   const handleNewTel = (e) => {
     if (e.target.value === '') {
@@ -43,6 +43,10 @@ function EditUserProfilePage() {
         });
     }
   };
+
+  useEffect(() => {
+    setWrapMenu(false);
+  }, []);
 
   return (
     <main>

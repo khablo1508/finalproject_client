@@ -36,7 +36,7 @@ function AppointmentCard({ title, time, duration, price, date, status }) {
 const Wrapper = styled.div`
   .card {
     width: 250px;
-    height: 200px;
+    height: 240px;
     display: flex;
     flex-direction: column;
     align-items: center;

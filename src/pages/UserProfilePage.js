@@ -85,7 +85,10 @@ function UserProfilePage() {
                 </div>
 
                 <div className='resp-btns'>
-                  <button className='resp-btn-edit btn' onClick={handleClick}>
+                  <button
+                    className='resp-btn-edit resp-btn btn'
+                    onClick={handleClick}
+                  >
                     Edit profile
                   </button>
                   <form className='logout-form resp-btn'>
@@ -104,7 +107,7 @@ function UserProfilePage() {
               </div>
 
               <div className='btns-container'>
-                <form>
+                <form className='logout-form'>
                   <button className='btn logout-btn' onClick={logOutUser}>
                     Logout
                   </button>
@@ -157,18 +160,20 @@ const Wrapper = styled.main`
       flex-direction: row;
       justify-content: space-between;
       width: 100%;
-      height: 30%;
+      height: 190px;
       .avatar-container {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         align-items: center;
         height: 100%;
         width: 40%;
         margin: 0 0 0 20px;
         img {
+          border: 4px solid var(--clr-dark);
           margin-top: 20px;
-          width: 65%;
-          height: 65%;
+          width: 100px;
+          height: 100px;
           border-radius: 50%;
           object-fit: cover;
         }
@@ -176,7 +181,7 @@ const Wrapper = styled.main`
           border-radius: 0;
           margin-top: 10px;
           width: 170px;
-          height: 70px;
+          height: 30px;
         }
       }
       .text-container {
@@ -185,7 +190,7 @@ const Wrapper = styled.main`
         align-items: center;
         justify-content: space-between;
         font-size: 12px;
-        padding: 10px 0;
+        padding: 25px 0 10px 0;
         height: 100%;
         width: 40%;
         margin: 0;
@@ -201,7 +206,7 @@ const Wrapper = styled.main`
             font-size: 30px;
           }
           .tel-email {
-            margin: 0;
+            margin-top: 10px;
             font-size: 10px;
           }
         }
@@ -249,61 +254,87 @@ const Wrapper = styled.main`
       }
     }
     @media screen and (min-width: 601px) {
-      /* left side */
       .appointment-info {
-        width: 70%;
-        height: 100%;
-        border-left: 5px dotted var(--clr-bourdeaux);
+        width: 100%;
+        height: 70%;
         .cards-container {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+          gap: 20px;
           padding: 20px 30px;
           width: 100%;
         }
       }
+    }
+  }
+  @media screen and (min-width: 901px) {
+    .user-profile {
+      flex-direction: row;
 
-      /* right-side */
       .profile-info {
+        border-right: 5px dotted var(--clr-bourdeaux);
+        height: 100%;
+        width: 350px;
         flex-direction: column;
-        width: 30%;
-        height: 98%;
-        align-items: center;
+        justify-content: flex-start;
         .avatar-container {
-          margin-top: 20px;
+          width: 100%;
+          margin: 0;
+          height: 40%;
           img {
-            width: 200px;
-            height: 200px;
+            width: 160px;
+            height: 160px;
           }
         }
         .text-container {
-          margin-top: 20px;
+          height: 40%;
           width: 100%;
-          height: 35%;
+
           .user-info {
-            .tel-email {
-              margin-top: 10px;
+            height: 60%;
+          }
+          .tel-email {
+            width: 70%;
+            align-items: flex-start;
+          }
+          .resp-btns {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            .resp-btn {
+              width: 85%;
+              height: 45%;
+              .resp-btn-logout {
+              }
             }
           }
           .edit-btn {
+            display: block;
             background: var(--clr-dark);
             color: #fff;
-            font-size: 20px;
-          }
-          .resp-btns {
-            /* display: none; */
           }
         }
         .btns-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: end;
-          width: 100%;
-          height: 30%;
+          height: 20%;
+          display: block;
+          .logout-form {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 15px;
+            .logout-btn {
+              background: var(--clr-bourdeaux);
+              color: var(--clr-ivory);
+            }
+          }
         }
-        .logout-btn {
-          background: var(--clr-bourdeaux);
-          font-size: 20px;
-          color: var(--clr-ivory);
-        }
+      }
+      .appointment-info {
+        border: none;
       }
     }
   }

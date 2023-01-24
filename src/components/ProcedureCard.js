@@ -65,22 +65,25 @@ const Wrapper = styled.div`
   .card {
     border-radius: 10px;
     background: #fff;
-    height: 450px;
+    height: 500px;
     max-width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   .card-img {
+    border: 2px solid red;
     border-radius: 0 0 30% 50%;
     width: 100%;
     height: 50%;
+    min-height: 50%;
     margin-bottom: 15px;
   }
   .card-body {
+    border: 2px solid blue;
     margin-bottom: 10px;
+    height: 50%;
 
-    height: 60%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

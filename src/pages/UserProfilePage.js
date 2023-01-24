@@ -185,6 +185,7 @@ const Wrapper = styled.main`
         }
       }
       .text-container {
+        margin: 0 20px 0 0;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -193,7 +194,7 @@ const Wrapper = styled.main`
         padding: 25px 0 10px 0;
         height: 100%;
         width: 40%;
-        margin: 0;
+
         .user-info {
           display: flex;
           flex-direction: column;
@@ -215,18 +216,21 @@ const Wrapper = styled.main`
         }
         .resp-btns {
           display: flex;
-          justify-content: space-around;
-          width: 60%;
+          justify-content: center;
+          width: 100%;
           height: 30%;
 
           .resp-btn-edit {
             width: 45%;
+            max-width: 70px;
             background: var(--clr-dark);
             height: 100%;
             color: #fff;
+            margin-right: 10px;
           }
           .logout-form {
             width: 45%;
+            max-width: 70px;
           }
           .resp-btn-logout {
             width: 100%;

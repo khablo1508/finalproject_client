@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/auth.context';
+import HamburgerMenu from '../components/HamburgerMenu';
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -10,7 +11,7 @@ function EditUserProfilePage() {
   const [newTel, setNewTel] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, wrapMenu } = useContext(AuthContext);
 
   const handleNewTel = (e) => {
     if (e.target.value === '') {
@@ -45,37 +46,42 @@ function EditUserProfilePage() {
 
   return (
     <main>
-      <section className='sign-form-section'>
-        <h1>Update Your Profile</h1>
+      <section className={wrapMenu ? 'wrap' : 'sign-form-section'}>
+        {wrapMenu ? (
+          <HamburgerMenu />
+        ) : (
+          <>
+            <h1>Edit Your Profile</h1>
+            <div className='sign-form-container'>
+              <form className='sign-form' onSubmit={handleUpdateSubmit}>
+                <div className='input-label-container'>
+                  <label>Password:</label>
+                  <input
+                    type='password'
+                    name='password'
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                </div>
+                <div className='input-label-container'>
+                  <label>Tel:</label>
+                  <input
+                    type='tel'
+                    name='phone'
+                    value={newTel}
+                    pattern='[0-9]{3}-[0-9]{2}-[0-9]{3}'
+                    onChange={handleNewTel}
+                  />
+                  <small>Format: 123-45-678</small>
+                </div>
 
-        <div className='sign-form-container'>
-          <form className='sign-form' onSubmit={handleUpdateSubmit}>
-            <div className='input-label-container'>
-              <label>Password:</label>
-              <input
-                type='password'
-                name='password'
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
+                <button className='btn sign-btn' type='submit'>
+                  Save
+                </button>
+              </form>
             </div>
-            <div className='input-label-container'>
-              <label>Tel:</label>
-              <input
-                type='tel'
-                name='phone'
-                value={newTel}
-                pattern='[0-9]{3}-[0-9]{2}-[0-9]{3}'
-                onChange={handleNewTel}
-              />
-              <small>Format: 123-45-678</small>
-            </div>
-
-            <button className='btn sign-btn' type='submit'>
-              Save
-            </button>
-          </form>
-        </div>
+          </>
+        )}
 
         {errorMessage && <p className='error-message'>{errorMessage}</p>}
       </section>

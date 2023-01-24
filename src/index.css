@@ -130,7 +130,8 @@ input {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: 40%;
+  width: 50%;
+  max-width: 300px;
 }
 .sign-suggestion p {
   font-size: 20px;

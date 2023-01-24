@@ -72,7 +72,6 @@ const Wrapper = styled.div`
     align-items: center;
   }
   .card-img {
-    border: 2px solid red;
     border-radius: 0 0 30% 50%;
     width: 100%;
     height: 50%;
@@ -80,7 +79,6 @@ const Wrapper = styled.div`
     margin-bottom: 15px;
   }
   .card-body {
-    border: 2px solid blue;
     margin-bottom: 10px;
     height: 50%;
 

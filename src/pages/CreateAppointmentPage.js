@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/auth.context';
 import { ProceduresContext } from '../context/procedures.context';
 import axios from 'axios';
 
 import Loading from '../components/Loading';
+import HamburgerMenu from '../components/HamburgerMenu';
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function CreateAppointmentPage() {
@@ -14,18 +16,8 @@ function CreateAppointmentPage() {
 
   const { appId } = useParams();
   const navigate = useNavigate();
+  const { wrapMenu, setWrapMenu } = useContext(AuthContext);
   const { chosenProcedure, setChosenProcedure } = useContext(ProceduresContext);
-
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/create-appointment/${appId}`)
-      .then((foundAppointment) => {
-        setChosenProcedure(foundAppointment.data);
-        console.log(chosenProcedure);
-        setUserId(foundAppointment.data.user);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   const requestAppointment = (e) => {
     e.preventDefault();
@@ -45,46 +37,64 @@ function CreateAppointmentPage() {
       });
   };
 
+  useEffect(() => {
+    setWrapMenu(false);
+    axios
+      .get(`${API_URL}/create-appointment/${appId}`)
+      .then((foundAppointment) => {
+        setChosenProcedure(foundAppointment.data);
+        console.log(chosenProcedure);
+        setUserId(foundAppointment.data.user);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <Wrapper>
       {chosenProcedure === undefined ? (
         <Loading />
       ) : (
-        <section>
-          <div className='sign-form-container'>
-            <h1>Create an appointment request</h1>
-            <div className='sign-form'>
-              <h3>Procedure: {chosenProcedure.procedure?.title} </h3>
-              <h3>Duration: {chosenProcedure.procedure?.duration} </h3>
-              <h3>Price: ${chosenProcedure.procedure?.price} </h3>
-              <form
-                className='input-label-container'
-                onSubmit={requestAppointment}
-              >
-                <div className='input-label-container'>
-                  <label>Date: </label>
-                  <input
-                    type='date'
-                    name='date'
-                    value={appDate}
-                    onChange={(e) => setAppDate(e.target.value)}
-                  />
+        <section className={wrapMenu ? 'wrap' : 'sign-form-section'}>
+          {wrapMenu ? (
+            <HamburgerMenu />
+          ) : (
+            <>
+              <div className='sign-form-container'>
+                <h1>Create an appointment request</h1>
+                <div className='sign-form'>
+                  <h3>Procedure: {chosenProcedure.procedure?.title} </h3>
+                  <h3>Duration: {chosenProcedure.procedure?.duration} </h3>
+                  <h3>Price: ${chosenProcedure.procedure?.price} </h3>
+                  <form
+                    className='input-label-container'
+                    onSubmit={requestAppointment}
+                  >
+                    <div className='input-label-container'>
+                      <label>Date: </label>
+                      <input
+                        type='date'
+                        name='date'
+                        value={appDate}
+                        onChange={(e) => setAppDate(e.target.value)}
+                      />
+                    </div>
+                    <div className='input-label-container'>
+                      <label>Time: </label>
+                      <input
+                        type='time'
+                        name='time'
+                        value={appTime}
+                        onChange={(e) => setAppTime(e.target.value)}
+                      />
+                    </div>
+                    <button className='btn sign-btn' type='submit'>
+                      Request an appointment
+                    </button>
+                  </form>
                 </div>
-                <div className='input-label-container'>
-                  <label>Time: </label>
-                  <input
-                    type='time'
-                    name='time'
-                    value={appTime}
-                    onChange={(e) => setAppTime(e.target.value)}
-                  />
-                </div>
-                <button className='btn sign-btn' type='submit'>
-                  Request an appointment
-                </button>
-              </form>
-            </div>
-          </div>
+              </div>
+            </>
+          )}
         </section>
       )}
     </Wrapper>

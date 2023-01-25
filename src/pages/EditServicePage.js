@@ -6,11 +6,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../context/auth.context';
 
 import Loading from '../components/Loading';
+import HamburgerMenu from '../components/HamburgerMenu';
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function EditServicePage() {
-  const { isLoading } = useContext(AuthContext);
+  const { isLoading, wrapMenu, setWrapMenu } = useContext(AuthContext);
   const { procedureId } = useParams();
   const navigate = useNavigate();
 
@@ -98,6 +99,7 @@ function EditServicePage() {
   };
 
   useEffect(() => {
+    setWrapMenu(false);
     axios
       .get(`${API_URL}/edit-procedure/${procedureId}`)
       .then((procedureFromDb) => {
@@ -110,122 +112,127 @@ function EditServicePage() {
     <Wrapper>
       {isLoading && <Loading />}
 
-      <section className='sign-form-section'>
-        <h1>Edit procedure</h1>
+      <section className={wrapMenu ? 'wrap' : 'sign-form-section'}>
+        {wrapMenu ? (
+          <HamburgerMenu />
+        ) : (
+          <>
+            <h1>Edit procedure</h1>
+            <div className='sign-form-container'>
+              {!deleteMessage && (
+                <div className='sign-form-container cont'>
+                  {!editTitle ? (
+                    <div className='heading-line'>
+                      <h3>Title: {procedureToEdit?.title}</h3>
+                      <button className='edit-btn' onClick={editTitleFunc}>
+                        <i className='fa-solid fa-pencil'></i>
+                      </button>
+                    </div>
+                  ) : (
+                    <form className='edit-form' onSubmit={submitChange}>
+                      <div className='input-label-container'>
+                        <label>Title:</label>
+                        <input
+                          type='text'
+                          name='newTitle'
+                          value={newTitle}
+                          onChange={(e) => setNewTitle(e.target.value)}
+                        />
+                      </div>
+                      <button className='submit-btn' type='submit'>
+                        <i className='fa-solid fa-check'></i>
+                      </button>
+                    </form>
+                  )}
+                  {!editDescription ? (
+                    <div className='description-div'>
+                      <div className='heading-line'>
+                        <h3>Description: </h3>
+                        <button className='edit-btn' onClick={editDescFunc}>
+                          <i className='fa-solid fa-pencil'></i>
+                        </button>
+                      </div>
+                      <p>{procedureToEdit?.description}</p>
+                    </div>
+                  ) : (
+                    <form className='desc-edit-form' onSubmit={submitChange}>
+                      <div className='desc-label-container'>
+                        <label>Description:</label>
+                        <button className='submit-btn' type='submit'>
+                          <i className='fa-solid fa-check'></i>
+                        </button>
+                      </div>
+                      <textarea
+                        type='text'
+                        name='newDescription'
+                        value={newDescription}
+                        onChange={(e) => setNewDescription(e.target.value)}
+                      />
+                    </form>
+                  )}
+                  {!editDuration ? (
+                    <div className='heading-line'>
+                      <h3>Duration: {procedureToEdit?.duration}</h3>
+                      <button className='edit-btn' onClick={editDurFunc}>
+                        <i className='fa-solid fa-pencil'></i>
+                      </button>
+                    </div>
+                  ) : (
+                    <form className='edit-form' onSubmit={submitChange}>
+                      <div className='input-label-container'>
+                        <label>Duration:</label>
+                        <input
+                          type='text'
+                          name='newDuration'
+                          value={newDuration}
+                          onChange={(e) => setNewDuration(e.target.value)}
+                        />
+                      </div>
+                      <button className='submit-btn' type='submit'>
+                        <i className='fa-solid fa-check'></i>
+                      </button>
+                    </form>
+                  )}
+                  {!editPrice ? (
+                    <div className='heading-line'>
+                      <h3>Price: ${procedureToEdit?.price}</h3>
+                      <button className='edit-btn' onClick={editPriceFunc}>
+                        <i className='fa-solid fa-pencil'></i>
+                      </button>
+                    </div>
+                  ) : (
+                    <form className='edit-form' onSubmit={submitChange}>
+                      <div className='input-label-container'>
+                        <label>Price: $ </label>
+                        <input
+                          type='text'
+                          name='newPrice'
+                          value={newPrice}
+                          onChange={(e) => setNewPrice(e.target.value)}
+                        />
+                      </div>
+                      <button className='submit-btn' type='submit'>
+                        <i className='fa-solid fa-check'></i>
+                      </button>
+                    </form>
+                  )}
+                  <button className='btn delete-btn' onClick={deleteProcedure}>
+                    Delete
+                  </button>
+                </div>
+              )}
 
-        <div className='sign-form-container'>
-          {!deleteMessage && (
-            <div className='sign-form-container cont'>
-              {!editTitle ? (
-                <div className='heading-line'>
-                  <h3>Title: {procedureToEdit?.title}</h3>
-                  <button className='edit-btn' onClick={editTitleFunc}>
-                    <i className='fa-solid fa-pencil'></i>
+              {deleteMessage && (
+                <div className='delete-msg-container'>
+                  <p className='delete-message'>{deleteMessage}</p>
+                  <button className='btn' onClick={() => navigate('/services')}>
+                    Back to services
                   </button>
                 </div>
-              ) : (
-                <form className='edit-form' onSubmit={submitChange}>
-                  <div className='input-label-container'>
-                    <label>Title:</label>
-                    <input
-                      type='text'
-                      name='newTitle'
-                      value={newTitle}
-                      onChange={(e) => setNewTitle(e.target.value)}
-                    />
-                  </div>
-                  <button className='submit-btn' type='submit'>
-                    <i className='fa-solid fa-check'></i>
-                  </button>
-                </form>
               )}
-              {!editDescription ? (
-                <div className='description-div'>
-                  <div className='heading-line'>
-                    <h3>Description: </h3>
-                    <button className='edit-btn' onClick={editDescFunc}>
-                      <i className='fa-solid fa-pencil'></i>
-                    </button>
-                  </div>
-                  <p>{procedureToEdit?.description}</p>
-                </div>
-              ) : (
-                <form className='desc-edit-form' onSubmit={submitChange}>
-                  <div className='desc-label-container'>
-                    <label>Description:</label>
-                    <button className='submit-btn' type='submit'>
-                      <i className='fa-solid fa-check'></i>
-                    </button>
-                  </div>
-                  <textarea
-                    type='text'
-                    name='newDescription'
-                    value={newDescription}
-                    onChange={(e) => setNewDescription(e.target.value)}
-                  />
-                </form>
-              )}
-              {!editDuration ? (
-                <div className='heading-line'>
-                  <h3>Duration: {procedureToEdit?.duration}</h3>
-                  <button className='edit-btn' onClick={editDurFunc}>
-                    <i className='fa-solid fa-pencil'></i>
-                  </button>
-                </div>
-              ) : (
-                <form className='edit-form' onSubmit={submitChange}>
-                  <div className='input-label-container'>
-                    <label>Duration:</label>
-                    <input
-                      type='text'
-                      name='newDuration'
-                      value={newDuration}
-                      onChange={(e) => setNewDuration(e.target.value)}
-                    />
-                  </div>
-                  <button className='submit-btn' type='submit'>
-                    <i className='fa-solid fa-check'></i>
-                  </button>
-                </form>
-              )}
-              {!editPrice ? (
-                <div className='heading-line'>
-                  <h3>Price: ${procedureToEdit?.price}</h3>
-                  <button className='edit-btn' onClick={editPriceFunc}>
-                    <i className='fa-solid fa-pencil'></i>
-                  </button>
-                </div>
-              ) : (
-                <form className='edit-form' onSubmit={submitChange}>
-                  <div className='input-label-container'>
-                    <label>Price: $</label>
-                    <input
-                      type='text'
-                      name='newPrice'
-                      value={newPrice}
-                      onChange={(e) => setNewPrice(e.target.value)}
-                    />
-                  </div>
-                  <button className='submit-btn' type='submit'>
-                    <i className='fa-solid fa-check'></i>
-                  </button>
-                </form>
-              )}
-              <button className='btn delete-btn' onClick={deleteProcedure}>
-                Delete
-              </button>
             </div>
-          )}
-
-          {deleteMessage && (
-            <div className='delete-msg-container'>
-              <p className='delete-message'>{deleteMessage}</p>
-              <button className='btn' onClick={() => navigate('/services')}>
-                Back to services
-              </button>
-            </div>
-          )}
-        </div>
+          </>
+        )}
       </section>
     </Wrapper>
   );
@@ -237,7 +244,7 @@ const Wrapper = styled.main`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    padding: 10px 0 0 0;
   }
   .cont {
     width: 100%;
@@ -265,7 +272,7 @@ const Wrapper = styled.main`
     flex-direction: column;
     align-items: center;
     width: 50%;
-    height: 35%;
+    height: 40%;
   }
   .description-div p {
     margin-top: 10px;
@@ -275,6 +282,7 @@ const Wrapper = styled.main`
     color: #fff;
     cursor: pointer;
   }
+
   /* FORMS */
   .edit-form {
     width: 70%;

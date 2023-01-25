@@ -5,14 +5,16 @@ import { AuthContext } from '../context/auth.context';
 import RequestCard from '../components/RequestCard';
 
 import axios from 'axios';
+import HamburgerMenu from '../components/HamburgerMenu';
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function AdminProfilePage() {
   const { requestsList, setRequestsList } = useContext(ProceduresContext);
-  const { isLoading } = useContext(AuthContext);
+  const { isLoading, wrapMenu, setWrapMenu } = useContext(AuthContext);
 
   useEffect(() => {
+    setWrapMenu(false);
     axios.get(`${API_URL}/admin-profile`).then((requestsFromDb) => {
       setRequestsList(requestsFromDb.data);
       console.log(requestsList);
@@ -21,29 +23,34 @@ function AdminProfilePage() {
 
   return (
     <Wrapper>
-      <section className='container'>
-        <h1>Your requests</h1>
+      <section className={wrapMenu ? 'wrap' : 'container'}>
+        {wrapMenu ? (
+          <HamburgerMenu />
+        ) : (
+          <>
+            <h1>Your requests</h1>
+            {!isLoading && (
+              <section className='cards-container'>
+                {requestsList.length === 0 && <h2>No requests yet</h2>}
 
-        {!isLoading && (
-          <section className='cards-container'>
-            {requestsList.length === 0 && <h2>No requests yet</h2>}
-
-            {requestsList.map((req) => {
-              return (
-                <RequestCard
-                  key={req._id}
-                  reqId={req._id}
-                  title={req.appointment.procedure?.title}
-                  decision={req.decision}
-                  date={req.appointment?.date}
-                  time={req.appointment?.time}
-                  appStatus={req.appointment?.status}
-                  appId={req.appointment?._id}
-                  client={req.appointment?.user}
-                ></RequestCard>
-              );
-            })}
-          </section>
+                {requestsList.map((req) => {
+                  return (
+                    <RequestCard
+                      key={req._id}
+                      reqId={req._id}
+                      title={req.appointment.procedure?.title}
+                      decision={req.decision}
+                      date={req.appointment?.date}
+                      time={req.appointment?.time}
+                      appStatus={req.appointment?.status}
+                      appId={req.appointment?._id}
+                      client={req.appointment?.user}
+                    ></RequestCard>
+                  );
+                })}
+              </section>
+            )}
+          </>
         )}
       </section>
     </Wrapper>
@@ -62,6 +69,8 @@ const Wrapper = styled.main`
     padding: 20px 30px;
     width: 100%;
     display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
     gap: 20px;
   }
 `;

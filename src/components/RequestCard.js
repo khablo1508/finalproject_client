@@ -51,10 +51,10 @@ function RequestCard({
               {time}
             </Card.Subtitle>
             <Card.Subtitle className='date'>
-              <span>Client: </span> {client.username}
+              <span>Client: </span> {client?.username}
             </Card.Subtitle>
             <Card.Subtitle className='date'>
-              <span>Contact: </span> {client.tel}
+              <span>Contact: </span> {client?.tel}
             </Card.Subtitle>
             <div
               className={`btns-container ${

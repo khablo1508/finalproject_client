@@ -43,7 +43,9 @@ function UserProfilePage() {
         setUser(foundUser.data);
 
         const appointments = foundUser.data.appointments.sort((a, b) => {
-          return new Date(a.date) - new Date(b.date);
+          return (
+            new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time)
+          );
         });
 
         setAppointmentsList(appointments);

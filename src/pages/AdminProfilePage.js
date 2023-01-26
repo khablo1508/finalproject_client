@@ -16,8 +16,13 @@ function AdminProfilePage() {
   useEffect(() => {
     setWrapMenu(false);
     axios.get(`${API_URL}/admin-profile`).then((requestsFromDb) => {
-      setRequestsList(requestsFromDb.data);
-      console.log(requestsList);
+      let sortedRequestsList = requestsFromDb.data.sort((a, b) => {
+        return (
+          new Date(a.appointment?.date + 'T' + a.appointment?.time) -
+          new Date(b.appointment?.date + 'T' + b.appointment?.time)
+        );
+      });
+      setRequestsList(sortedRequestsList);
     });
   }, []);
 
@@ -38,7 +43,7 @@ function AdminProfilePage() {
                     <RequestCard
                       key={req._id}
                       reqId={req._id}
-                      title={req.appointment.procedure?.title}
+                      title={req.appointment?.procedure?.title}
                       decision={req.decision}
                       date={req.appointment?.date}
                       time={req.appointment?.time}
